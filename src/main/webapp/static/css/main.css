@@ -1,0 +1,32 @@
+:root {
+    --startColor: #00A3E1;
+    --endColor: #05DCEA;
+}
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+a, img {
+    border: 0;
+    text-decoration: none;
+}
+body {
+    font: 14px/180% Arial, Helvetica, sans-serif, "新宋体";
+    position: relative;
+    min-height: 100%;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(var(--startColor)), to(var(--endColor)));
+    background-image: -webkit-linear-gradient(top, var(--startColor) 0%, var(--endColor) 100%);
+    background-image: -o-linear-gradient(top, var(--startColor) 0%, var(--endColor) 100%);
+    background-image: linear-gradient(to bottom, var(--startColor) 0%, var(--endColor) 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#FF00A3E1", endColorstr="#FF05DCEA", GradientType=0);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+    color: #ffffff;
+}
+div.wrapper {
+    margin: 0 15%;
+}

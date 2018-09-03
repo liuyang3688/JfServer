@@ -1,0 +1,5 @@
+*.[o]
+*.jar
+out/
+temp/
+target/
