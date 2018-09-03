@@ -1,6 +1,7 @@
 package com.leotech.rt;
 
 import com.leotech.model.Triple;
+import com.leotech.service.RedisService;
 import com.leotech.service.RtService;
 import com.leotech.util.Constant;
 
@@ -9,7 +10,8 @@ public class RtThread implements Runnable {
 		while(!Thread.interrupted()) {
 			// 空调
 			try{
-				Thread.sleep(500);
+				RedisService.sendDataToRedis();
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException e)
 			{
