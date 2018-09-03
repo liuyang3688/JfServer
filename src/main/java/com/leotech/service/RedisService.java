@@ -1,6 +1,7 @@
 package com.leotech.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.leotech.model.Triple;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;
@@ -11,17 +12,19 @@ import java.util.Set;
 
 public class RedisService {
     private static Jedis jedis;
+    private static Boolean isApp;
     static {
         String host = "47.96.127.175";
         int port = 6379;
         int timeout = 5000;
         try {
             Properties prop = new Properties();
-            InputStream in = RtService.class.getResourceAsStream("/config/service.properties");
+            InputStream in = RtService.class.getResourceAsStream("/config/redis.properties");
             prop.load(in);
             host = prop.getProperty("redis.host", "47.96.127.175");
             port = Integer.parseInt(prop.getProperty("redis.port", "6379"));
             timeout = Integer.parseInt(prop.getProperty("redis.timeout", "5000"));
+            isApp = Boolean.parseBoolean(prop.getProperty("isApp", "false"));
             in.close();
         } catch (Exception e) {
         }
@@ -35,7 +38,36 @@ public class RedisService {
     public static void connect() throws Exception {
         jedis.auth("admin");
     }
-
+    public static void sendDataToRedis() {
+        if (!isApp) {
+            try {
+                if (! jedis.isConnected()) {
+                    // 如果未连接，尝试连接一次
+                    System.out.println("getRtData: 当前未连接，尝试一次。");
+                    connect();
+                }
+                if (jedis.isConnected()) {
+                    Map<Triple, Double> mapSrc = RtService.getRtMap();
+                    Map<String, HashMap<String, String>> mapDst = new HashMap<String, HashMap<String, String>>();
+                    for (Triple triple : mapSrc.keySet()) {
+                        double dVal = mapSrc.get(triple);
+                        String keyDst = String.format("%02d-", triple.bjlx) + String.format("%03d", triple.bjid);
+                        if (mapDst.containsKey(keyDst)) {
+                            HashMap<String, String> mapCs = new HashMap<String, String>();
+                            mapDst.put(keyDst, mapCs);
+                        }
+                        mapDst.get(keyDst).put(String.valueOf(triple.bjcs), String.valueOf(dVal));
+                    }
+                    for (String key : mapDst.keySet()) {
+                        Map<String, String> mapCs = mapDst.get(key);
+                        jedis.hmset(key, mapCs);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static JSONObject getRtData() {
         JSONObject datas = new JSONObject();
 

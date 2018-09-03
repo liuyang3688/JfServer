@@ -3,8 +3,10 @@ package com.leotech.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.leotech.model.Triple;
+import redis.clients.jedis.Jedis;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RtService {
@@ -13,6 +15,9 @@ public class RtService {
 	static{
 		s_mapRtData = new ConcurrentHashMap<Triple, Double>();
 		//s_mapRtData_YX = new ConcurrentHashMap<Triple, Integer>();
+	}
+	public static Map<Triple, Double> getRtMap() {
+		return s_mapRtData;
 	}
 	public static JSONObject getRtData() {
 		JSONObject datas = new JSONObject();
