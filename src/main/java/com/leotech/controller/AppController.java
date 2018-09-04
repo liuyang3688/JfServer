@@ -34,7 +34,7 @@ public class AppController {
     @RequestMapping("get_rt_data")
     public void getRtData(HttpServletRequest request, HttpServletResponse response)
     {
-        JSONObject datas = new JSONObject();
+        JSONObject datas = new JSONObject(true);
 
         String strBjlx = request.getParameter("bjlx");
         String strBjid = request.getParameter("bjid");

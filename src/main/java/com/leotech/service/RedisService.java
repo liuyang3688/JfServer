@@ -5,10 +5,7 @@ import com.leotech.model.Triple;
 import redis.clients.jedis.Jedis;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 public class RedisService {
     private static Jedis jedis;
@@ -57,10 +54,10 @@ public class RedisService {
                         double dVal = mapSrc.get(triple);
                         String keyDst = String.format("%02d-", triple.bjlx) + String.format("%03d", triple.bjid);
                         if (mapDst.containsKey(keyDst)) {
-                            HashMap<String, String> mapCs = new HashMap<String, String>();
+                            HashMap<String, String> mapCs = new LinkedHashMap<>();
                             mapDst.put(keyDst, mapCs);
                         }
-                        mapDst.get(keyDst).put(String.valueOf(triple.bjcs), String.valueOf(dVal));
+                        mapDst.get(keyDst).put(String.format("%04d", triple.bjcs), String.valueOf(dVal));
                     }
                     for (String key : mapDst.keySet()) {
                         Map<String, String> mapCs = mapDst.get(key);
