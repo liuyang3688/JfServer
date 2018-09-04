@@ -1,13 +1,9 @@
 package com.leotech.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.leotech.entity.Area;
-import com.leotech.entity.Device;
-import com.leotech.entity.System;
+import com.leotech.entity.*;
 import com.leotech.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +23,14 @@ public class AppController {
     private CabinetService cabinetService;
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    private EthService ethService;
+    @Autowired
+    private CableService cableService;
+    @Autowired
+    private PowerService powerService;
+    @Autowired
+    private StatsService statsService;
     @RequestMapping("get_rt_data")
     public void getRtData(HttpServletRequest request, HttpServletResponse response)
     {
@@ -91,35 +95,54 @@ public class AppController {
         }
     }
     @RequestMapping("load_area")
-    public List<Area> loadArea(HttpServletRequest request, HttpServletResponse response)
+    public List<Area> loadArea()
     {
         return areaService.getAll();
     }
     @RequestMapping("load_system")
-    public List<System> loadSystem(HttpServletRequest request, HttpServletResponse response)
+    public List<com.leotech.entity.System> loadSystem()
     {
         return systemService.getAll();
     }
 
     @RequestMapping("load_cabinet")
-    public void loadCabinet(HttpServletRequest request, HttpServletResponse response)
+    public List<Cabinet> loadCabinet()
     {
-        JSONArray cabinets = cabinetService.getAll_3d();
-        try {
-            response.getWriter().print(cabinets);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return cabinetService.getAll();
     }
 
     @RequestMapping("load_device")
-    public List<Device> loadDevice(HttpServletRequest request, HttpServletResponse response)
+    public List<Device> loadDevice()
     {
         return deviceService.getAll();
     }
 
     @RequestMapping("load_eth")
-    public void loadEth(HttpServletRequest request, HttpServletResponse response)
+    public List<Eth> loadEth()
     {
+        return ethService.getAll();
+    }
+
+    @RequestMapping("load_cable")
+    public List<Cable> loadCable()
+    {
+        return cableService.getAll();
+    }
+
+    @RequestMapping("load_power")
+    public List<Power> loadPower()
+    {
+        return powerService.getAll();
+    }
+
+    @RequestMapping("load_stats_space")
+    public List<Stats> loadStatsSpace()
+    {
+        return statsService.getAll();
+    }
+    @RequestMapping("load_stats_load")
+    public List<Stats> loadStatsLoad()
+    {
+        return statsService.getAll();
     }
 }

@@ -16,7 +16,7 @@ public class Cabinet {
     public int station;
     public String person;
     public String memo;
-    public String capacity;
+    public double capacity;
     public int areaId;
     public int systemId;
 }
