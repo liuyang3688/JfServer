@@ -35,8 +35,12 @@ public class RedisService {
             System.out.println("Jedis: connect to redis server exception.");
         }
     }
-    public static void connect() throws Exception {
-        jedis.auth("admin");
+    public static void connect() {
+        try {
+            jedis.auth("admin");
+        } catch (Exception e) {
+            System.out.println("Redis connect:" + e.getMessage());
+        }
     }
     public static void sendDataToRedis() {
         if (!isApp) {

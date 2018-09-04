@@ -12,7 +12,13 @@ public class GlobalListener implements ServletContextListener{
 	private Thread powerThread = null;
 	private Thread doorThread = null;
 	private Thread waterThread = null;
+	private Thread rtThread = null;
 	public void contextDestroyed(ServletContextEvent sce) {
+		if (rtThread != null){
+			rtThread.interrupt();
+			rtThread = null;
+			System.out.println("发送Redis线程销毁");
+		}
 		if (airCondThread != null) {
 			airCondThread.interrupt();
 			airCondThread = null;
@@ -48,6 +54,10 @@ public class GlobalListener implements ServletContextListener{
 		airCondThread = new Thread(new AirCondComThread(), "airCondThread");
 		airCondThread.start();
 		System.out.println("空调采集线程启动");
+
+		rtThread = new Thread(new RtThread(), "rtThread");
+		rtThread.start();
+		System.out.println("发送Redis数据线程启动");
 //		powerThread = new Thread(new PowerComThread(), "powerThread");
 //		powerThread.start();
 //		System.out.println("电量仪采集线程启动");
