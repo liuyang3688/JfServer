@@ -15,6 +15,7 @@ public class Stats {
 //    public int id;
     @Id
     public String name;
+    public String cabName;
     public int totalU;
     public int usedU;
     public int remainU;

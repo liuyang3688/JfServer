@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+    <classPathEntry
+            location="lib/mysql-connector-java-3.1.13.jar"/>
+    <context id="my" targetRuntime="MyBatis3">
+        <property name="xmlMergeable" value="false" />
+        <property name="javaMergeable" value="false" />
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/db"
+                        userId="root"
+                        password="admin"/>
+
+        <javaModelGenerator targetPackage="com.leotech.entity" targetProject="src/main/resources/mybatis-generator">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.leotech.mapper" targetProject="src/main/resources/mybatis-generator">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.leotech.mapper" targetProject="src/main/resources/mybatis-generator" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="T_FEE_AGTBILL" domainObjectName="FeeAgentBill"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+        <!--<table tableName="CTAS_FEE_BASE" domainObjectName="FeeBase"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <table
+            tableName="area"
+            domainObjectName="Area"
+            enableCountByExample="true"
+            enableUpdateByExample="true"
+            enableDeleteByExample="true"
+            enableSelectByExample="true"
+            selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="button"
+                domainObjectName="Button"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="cabinet"
+                domainObjectName="Cabinet"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="cable"
+                domainObjectName="Cable"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="clone"
+                domainObjectName="Clone"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="device"
+                domainObjectName="Device"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="device_type"
+                domainObjectName="DeviceType"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="eth"
+                domainObjectName="Eth"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="event"
+                domainObjectName="Event"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="label"
+                domainObjectName="Label"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="material"
+                domainObjectName="Material"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="mesh"
+                domainObjectName="Mesh"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="power"
+                domainObjectName="Power"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="station"
+                domainObjectName="Station"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="stats"
+                domainObjectName="Stats"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="system"
+                domainObjectName="System"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="template"
+                domainObjectName="Template"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+        <table
+                tableName="text"
+                domainObjectName="Text"
+                enableCountByExample="true"
+                enableUpdateByExample="true"
+                enableDeleteByExample="true"
+                enableSelectByExample="true"
+                selectByExampleQueryId="true">
+        </table>
+    </context>
+</generatorConfiguration>

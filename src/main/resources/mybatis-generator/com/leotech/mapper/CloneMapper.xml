@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leotech.mapper.CloneMapper">
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Clone">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="isShow" jdbcType="INTEGER" property="isshow" />
+    <result column="refCode" jdbcType="VARCHAR" property="refcode" />
+    <result column="copyfrom" jdbcType="VARCHAR" property="copyfrom" />
+    <result column="pos_x" jdbcType="DOUBLE" property="posX" />
+    <result column="pos_y" jdbcType="DOUBLE" property="posY" />
+    <result column="pos_z" jdbcType="DOUBLE" property="posZ" />
+    <result column="rot_x" jdbcType="DOUBLE" property="rotX" />
+    <result column="rot_y" jdbcType="DOUBLE" property="rotY" />
+    <result column="rot_z" jdbcType="DOUBLE" property="rotZ" />
+    <result column="scl_x" jdbcType="DOUBLE" property="sclX" />
+    <result column="scl_y" jdbcType="DOUBLE" property="sclY" />
+    <result column="scl_z" jdbcType="DOUBLE" property="sclZ" />
+    <result column="parent" jdbcType="VARCHAR" property="parent" />
+    <result column="isDirty" jdbcType="INTEGER" property="isdirty" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, isShow, refCode, copyfrom, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, scl_x, 
+    scl_y, scl_z, parent, isDirty
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.CloneExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from clone
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clone
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clone
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.CloneExample">
+    delete from clone
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Clone">
+    insert into clone (id, name, isShow, 
+      refCode, copyfrom, pos_x, 
+      pos_y, pos_z, rot_x, rot_y, 
+      rot_z, scl_x, scl_y, scl_z, 
+      parent, isDirty)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{isshow,jdbcType=INTEGER}, 
+      #{refcode,jdbcType=VARCHAR}, #{copyfrom,jdbcType=VARCHAR}, #{posX,jdbcType=DOUBLE}, 
+      #{posY,jdbcType=DOUBLE}, #{posZ,jdbcType=DOUBLE}, #{rotX,jdbcType=DOUBLE}, #{rotY,jdbcType=DOUBLE}, 
+      #{rotZ,jdbcType=DOUBLE}, #{sclX,jdbcType=DOUBLE}, #{sclY,jdbcType=DOUBLE}, #{sclZ,jdbcType=DOUBLE}, 
+      #{parent,jdbcType=VARCHAR}, #{isdirty,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Clone">
+    insert into clone
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="isshow != null">
+        isShow,
+      </if>
+      <if test="refcode != null">
+        refCode,
+      </if>
+      <if test="copyfrom != null">
+        copyfrom,
+      </if>
+      <if test="posX != null">
+        pos_x,
+      </if>
+      <if test="posY != null">
+        pos_y,
+      </if>
+      <if test="posZ != null">
+        pos_z,
+      </if>
+      <if test="rotX != null">
+        rot_x,
+      </if>
+      <if test="rotY != null">
+        rot_y,
+      </if>
+      <if test="rotZ != null">
+        rot_z,
+      </if>
+      <if test="sclX != null">
+        scl_x,
+      </if>
+      <if test="sclY != null">
+        scl_y,
+      </if>
+      <if test="sclZ != null">
+        scl_z,
+      </if>
+      <if test="parent != null">
+        parent,
+      </if>
+      <if test="isdirty != null">
+        isDirty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="refcode != null">
+        #{refcode,jdbcType=VARCHAR},
+      </if>
+      <if test="copyfrom != null">
+        #{copyfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="posX != null">
+        #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        #{isdirty,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.CloneExample" resultType="java.lang.Integer">
+    select count(*) from clone
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update clone
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null">
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.refcode != null">
+        refCode = #{record.refcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.copyfrom != null">
+        copyfrom = #{record.copyfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posX != null">
+        pos_x = #{record.posX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posY != null">
+        pos_y = #{record.posY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posZ != null">
+        pos_z = #{record.posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotX != null">
+        rot_x = #{record.rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotY != null">
+        rot_y = #{record.rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotZ != null">
+        rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclX != null">
+        scl_x = #{record.sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclY != null">
+        scl_y = #{record.sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclZ != null">
+        scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.parent != null">
+        parent = #{record.parent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdirty != null">
+        isDirty = #{record.isdirty,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update clone
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      refCode = #{record.refcode,jdbcType=VARCHAR},
+      copyfrom = #{record.copyfrom,jdbcType=VARCHAR},
+      pos_x = #{record.posX,jdbcType=DOUBLE},
+      pos_y = #{record.posY,jdbcType=DOUBLE},
+      pos_z = #{record.posZ,jdbcType=DOUBLE},
+      rot_x = #{record.rotX,jdbcType=DOUBLE},
+      rot_y = #{record.rotY,jdbcType=DOUBLE},
+      rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      scl_x = #{record.sclX,jdbcType=DOUBLE},
+      scl_y = #{record.sclY,jdbcType=DOUBLE},
+      scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      parent = #{record.parent,jdbcType=VARCHAR},
+      isDirty = #{record.isdirty,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Clone">
+    update clone
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="refcode != null">
+        refCode = #{refcode,jdbcType=VARCHAR},
+      </if>
+      <if test="copyfrom != null">
+        copyfrom = #{copyfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="posX != null">
+        pos_x = #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        pos_y = #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        pos_z = #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        rot_x = #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        rot_y = #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        rot_z = #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        scl_x = #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        scl_y = #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        scl_z = #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="parent != null">
+        parent = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        isDirty = #{isdirty,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Clone">
+    update clone
+    set name = #{name,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      refCode = #{refcode,jdbcType=VARCHAR},
+      copyfrom = #{copyfrom,jdbcType=VARCHAR},
+      pos_x = #{posX,jdbcType=DOUBLE},
+      pos_y = #{posY,jdbcType=DOUBLE},
+      pos_z = #{posZ,jdbcType=DOUBLE},
+      rot_x = #{rotX,jdbcType=DOUBLE},
+      rot_y = #{rotY,jdbcType=DOUBLE},
+      rot_z = #{rotZ,jdbcType=DOUBLE},
+      scl_x = #{sclX,jdbcType=DOUBLE},
+      scl_y = #{sclY,jdbcType=DOUBLE},
+      scl_z = #{sclZ,jdbcType=DOUBLE},
+      parent = #{parent,jdbcType=VARCHAR},
+      isDirty = #{isdirty,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Clone">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="isShow" jdbcType="INTEGER" property="isshow" />
+    <result column="refCode" jdbcType="VARCHAR" property="refcode" />
+    <result column="copyfrom" jdbcType="VARCHAR" property="copyfrom" />
+    <result column="pos_x" jdbcType="DOUBLE" property="posX" />
+    <result column="pos_y" jdbcType="DOUBLE" property="posY" />
+    <result column="pos_z" jdbcType="DOUBLE" property="posZ" />
+    <result column="rot_x" jdbcType="DOUBLE" property="rotX" />
+    <result column="rot_y" jdbcType="DOUBLE" property="rotY" />
+    <result column="rot_z" jdbcType="DOUBLE" property="rotZ" />
+    <result column="scl_x" jdbcType="DOUBLE" property="sclX" />
+    <result column="scl_y" jdbcType="DOUBLE" property="sclY" />
+    <result column="scl_z" jdbcType="DOUBLE" property="sclZ" />
+    <result column="parent" jdbcType="VARCHAR" property="parent" />
+    <result column="isDirty" jdbcType="INTEGER" property="isdirty" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, isShow, refCode, copyfrom, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, scl_x, 
+    scl_y, scl_z, parent, isDirty
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.CloneExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from clone
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clone
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from clone
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.CloneExample">
+    delete from clone
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Clone">
+    insert into clone (id, name, isShow, 
+      refCode, copyfrom, pos_x, 
+      pos_y, pos_z, rot_x, rot_y, 
+      rot_z, scl_x, scl_y, scl_z, 
+      parent, isDirty)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{isshow,jdbcType=INTEGER}, 
+      #{refcode,jdbcType=VARCHAR}, #{copyfrom,jdbcType=VARCHAR}, #{posX,jdbcType=DOUBLE}, 
+      #{posY,jdbcType=DOUBLE}, #{posZ,jdbcType=DOUBLE}, #{rotX,jdbcType=DOUBLE}, #{rotY,jdbcType=DOUBLE}, 
+      #{rotZ,jdbcType=DOUBLE}, #{sclX,jdbcType=DOUBLE}, #{sclY,jdbcType=DOUBLE}, #{sclZ,jdbcType=DOUBLE}, 
+      #{parent,jdbcType=VARCHAR}, #{isdirty,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Clone">
+    insert into clone
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="isshow != null">
+        isShow,
+      </if>
+      <if test="refcode != null">
+        refCode,
+      </if>
+      <if test="copyfrom != null">
+        copyfrom,
+      </if>
+      <if test="posX != null">
+        pos_x,
+      </if>
+      <if test="posY != null">
+        pos_y,
+      </if>
+      <if test="posZ != null">
+        pos_z,
+      </if>
+      <if test="rotX != null">
+        rot_x,
+      </if>
+      <if test="rotY != null">
+        rot_y,
+      </if>
+      <if test="rotZ != null">
+        rot_z,
+      </if>
+      <if test="sclX != null">
+        scl_x,
+      </if>
+      <if test="sclY != null">
+        scl_y,
+      </if>
+      <if test="sclZ != null">
+        scl_z,
+      </if>
+      <if test="parent != null">
+        parent,
+      </if>
+      <if test="isdirty != null">
+        isDirty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="refcode != null">
+        #{refcode,jdbcType=VARCHAR},
+      </if>
+      <if test="copyfrom != null">
+        #{copyfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="posX != null">
+        #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        #{isdirty,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.CloneExample" resultType="java.lang.Integer">
+    select count(*) from clone
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update clone
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null">
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.refcode != null">
+        refCode = #{record.refcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.copyfrom != null">
+        copyfrom = #{record.copyfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posX != null">
+        pos_x = #{record.posX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posY != null">
+        pos_y = #{record.posY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posZ != null">
+        pos_z = #{record.posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotX != null">
+        rot_x = #{record.rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotY != null">
+        rot_y = #{record.rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotZ != null">
+        rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclX != null">
+        scl_x = #{record.sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclY != null">
+        scl_y = #{record.sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclZ != null">
+        scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.parent != null">
+        parent = #{record.parent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdirty != null">
+        isDirty = #{record.isdirty,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update clone
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      refCode = #{record.refcode,jdbcType=VARCHAR},
+      copyfrom = #{record.copyfrom,jdbcType=VARCHAR},
+      pos_x = #{record.posX,jdbcType=DOUBLE},
+      pos_y = #{record.posY,jdbcType=DOUBLE},
+      pos_z = #{record.posZ,jdbcType=DOUBLE},
+      rot_x = #{record.rotX,jdbcType=DOUBLE},
+      rot_y = #{record.rotY,jdbcType=DOUBLE},
+      rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      scl_x = #{record.sclX,jdbcType=DOUBLE},
+      scl_y = #{record.sclY,jdbcType=DOUBLE},
+      scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      parent = #{record.parent,jdbcType=VARCHAR},
+      isDirty = #{record.isdirty,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Clone">
+    update clone
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="refcode != null">
+        refCode = #{refcode,jdbcType=VARCHAR},
+      </if>
+      <if test="copyfrom != null">
+        copyfrom = #{copyfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="posX != null">
+        pos_x = #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        pos_y = #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        pos_z = #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        rot_x = #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        rot_y = #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        rot_z = #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        scl_x = #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        scl_y = #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        scl_z = #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="parent != null">
+        parent = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        isDirty = #{isdirty,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Clone">
+    update clone
+    set name = #{name,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      refCode = #{refcode,jdbcType=VARCHAR},
+      copyfrom = #{copyfrom,jdbcType=VARCHAR},
+      pos_x = #{posX,jdbcType=DOUBLE},
+      pos_y = #{posY,jdbcType=DOUBLE},
+      pos_z = #{posZ,jdbcType=DOUBLE},
+      rot_x = #{rotX,jdbcType=DOUBLE},
+      rot_y = #{rotY,jdbcType=DOUBLE},
+      rot_z = #{rotZ,jdbcType=DOUBLE},
+      scl_x = #{sclX,jdbcType=DOUBLE},
+      scl_y = #{sclY,jdbcType=DOUBLE},
+      scl_z = #{sclZ,jdbcType=DOUBLE},
+      parent = #{parent,jdbcType=VARCHAR},
+      isDirty = #{isdirty,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

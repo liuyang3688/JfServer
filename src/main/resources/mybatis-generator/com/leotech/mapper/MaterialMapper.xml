@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leotech.mapper.MaterialMapper">
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Material">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="skinColor" jdbcType="VARCHAR" property="skincolor" />
+    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
+    <result column="isRepeat" jdbcType="INTEGER" property="isrepeat" />
+    <result column="skin_up_skinColor" jdbcType="VARCHAR" property="skinUpSkincolor" />
+    <result column="skin_up_imgUrl" jdbcType="VARCHAR" property="skinUpImgurl" />
+    <result column="skin_down_skinColor" jdbcType="VARCHAR" property="skinDownSkincolor" />
+    <result column="skin_down_imgUrl" jdbcType="VARCHAR" property="skinDownImgurl" />
+    <result column="skin_left_skinColor" jdbcType="VARCHAR" property="skinLeftSkincolor" />
+    <result column="skin_left_imgUrl" jdbcType="VARCHAR" property="skinLeftImgurl" />
+    <result column="skin_right_skinColor" jdbcType="VARCHAR" property="skinRightSkincolor" />
+    <result column="skin_right_imgUrl" jdbcType="VARCHAR" property="skinRightImgurl" />
+    <result column="skin_fore_skinColor" jdbcType="VARCHAR" property="skinForeSkincolor" />
+    <result column="skin_fore_imgUrl" jdbcType="VARCHAR" property="skinForeImgurl" />
+    <result column="skin_back_skinColor" jdbcType="VARCHAR" property="skinBackSkincolor" />
+    <result column="skin_back_imgUrl" jdbcType="VARCHAR" property="skinBackImgurl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, skinColor, imgurl, isRepeat, skin_up_skinColor, skin_up_imgUrl, skin_down_skinColor, 
+    skin_down_imgUrl, skin_left_skinColor, skin_left_imgUrl, skin_right_skinColor, skin_right_imgUrl, 
+    skin_fore_skinColor, skin_fore_imgUrl, skin_back_skinColor, skin_back_imgUrl
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.MaterialExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.MaterialExample">
+    delete from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Material">
+    insert into material (id, name, skinColor, 
+      imgurl, isRepeat, skin_up_skinColor, 
+      skin_up_imgUrl, skin_down_skinColor, skin_down_imgUrl, 
+      skin_left_skinColor, skin_left_imgUrl, skin_right_skinColor, 
+      skin_right_imgUrl, skin_fore_skinColor, skin_fore_imgUrl, 
+      skin_back_skinColor, skin_back_imgUrl)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{skincolor,jdbcType=VARCHAR}, 
+      #{imgurl,jdbcType=VARCHAR}, #{isrepeat,jdbcType=INTEGER}, #{skinUpSkincolor,jdbcType=VARCHAR}, 
+      #{skinUpImgurl,jdbcType=VARCHAR}, #{skinDownSkincolor,jdbcType=VARCHAR}, #{skinDownImgurl,jdbcType=VARCHAR}, 
+      #{skinLeftSkincolor,jdbcType=VARCHAR}, #{skinLeftImgurl,jdbcType=VARCHAR}, #{skinRightSkincolor,jdbcType=VARCHAR}, 
+      #{skinRightImgurl,jdbcType=VARCHAR}, #{skinForeSkincolor,jdbcType=VARCHAR}, #{skinForeImgurl,jdbcType=VARCHAR}, 
+      #{skinBackSkincolor,jdbcType=VARCHAR}, #{skinBackImgurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Material">
+    insert into material
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="skincolor != null">
+        skinColor,
+      </if>
+      <if test="imgurl != null">
+        imgurl,
+      </if>
+      <if test="isrepeat != null">
+        isRepeat,
+      </if>
+      <if test="skinUpSkincolor != null">
+        skin_up_skinColor,
+      </if>
+      <if test="skinUpImgurl != null">
+        skin_up_imgUrl,
+      </if>
+      <if test="skinDownSkincolor != null">
+        skin_down_skinColor,
+      </if>
+      <if test="skinDownImgurl != null">
+        skin_down_imgUrl,
+      </if>
+      <if test="skinLeftSkincolor != null">
+        skin_left_skinColor,
+      </if>
+      <if test="skinLeftImgurl != null">
+        skin_left_imgUrl,
+      </if>
+      <if test="skinRightSkincolor != null">
+        skin_right_skinColor,
+      </if>
+      <if test="skinRightImgurl != null">
+        skin_right_imgUrl,
+      </if>
+      <if test="skinForeSkincolor != null">
+        skin_fore_skinColor,
+      </if>
+      <if test="skinForeImgurl != null">
+        skin_fore_imgUrl,
+      </if>
+      <if test="skinBackSkincolor != null">
+        skin_back_skinColor,
+      </if>
+      <if test="skinBackImgurl != null">
+        skin_back_imgUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="skincolor != null">
+        #{skincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isrepeat != null">
+        #{isrepeat,jdbcType=INTEGER},
+      </if>
+      <if test="skinUpSkincolor != null">
+        #{skinUpSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinUpImgurl != null">
+        #{skinUpImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownSkincolor != null">
+        #{skinDownSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownImgurl != null">
+        #{skinDownImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftSkincolor != null">
+        #{skinLeftSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftImgurl != null">
+        #{skinLeftImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightSkincolor != null">
+        #{skinRightSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightImgurl != null">
+        #{skinRightImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeSkincolor != null">
+        #{skinForeSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeImgurl != null">
+        #{skinForeImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackSkincolor != null">
+        #{skinBackSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackImgurl != null">
+        #{skinBackImgurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.MaterialExample" resultType="java.lang.Integer">
+    select count(*) from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update material
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skincolor != null">
+        skinColor = #{record.skincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgurl != null">
+        imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isrepeat != null">
+        isRepeat = #{record.isrepeat,jdbcType=INTEGER},
+      </if>
+      <if test="record.skinUpSkincolor != null">
+        skin_up_skinColor = #{record.skinUpSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinUpImgurl != null">
+        skin_up_imgUrl = #{record.skinUpImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinDownSkincolor != null">
+        skin_down_skinColor = #{record.skinDownSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinDownImgurl != null">
+        skin_down_imgUrl = #{record.skinDownImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinLeftSkincolor != null">
+        skin_left_skinColor = #{record.skinLeftSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinLeftImgurl != null">
+        skin_left_imgUrl = #{record.skinLeftImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinRightSkincolor != null">
+        skin_right_skinColor = #{record.skinRightSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinRightImgurl != null">
+        skin_right_imgUrl = #{record.skinRightImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinForeSkincolor != null">
+        skin_fore_skinColor = #{record.skinForeSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinForeImgurl != null">
+        skin_fore_imgUrl = #{record.skinForeImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinBackSkincolor != null">
+        skin_back_skinColor = #{record.skinBackSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinBackImgurl != null">
+        skin_back_imgUrl = #{record.skinBackImgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update material
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      skinColor = #{record.skincolor,jdbcType=VARCHAR},
+      imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      isRepeat = #{record.isrepeat,jdbcType=INTEGER},
+      skin_up_skinColor = #{record.skinUpSkincolor,jdbcType=VARCHAR},
+      skin_up_imgUrl = #{record.skinUpImgurl,jdbcType=VARCHAR},
+      skin_down_skinColor = #{record.skinDownSkincolor,jdbcType=VARCHAR},
+      skin_down_imgUrl = #{record.skinDownImgurl,jdbcType=VARCHAR},
+      skin_left_skinColor = #{record.skinLeftSkincolor,jdbcType=VARCHAR},
+      skin_left_imgUrl = #{record.skinLeftImgurl,jdbcType=VARCHAR},
+      skin_right_skinColor = #{record.skinRightSkincolor,jdbcType=VARCHAR},
+      skin_right_imgUrl = #{record.skinRightImgurl,jdbcType=VARCHAR},
+      skin_fore_skinColor = #{record.skinForeSkincolor,jdbcType=VARCHAR},
+      skin_fore_imgUrl = #{record.skinForeImgurl,jdbcType=VARCHAR},
+      skin_back_skinColor = #{record.skinBackSkincolor,jdbcType=VARCHAR},
+      skin_back_imgUrl = #{record.skinBackImgurl,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Material">
+    update material
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="skincolor != null">
+        skinColor = #{skincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isrepeat != null">
+        isRepeat = #{isrepeat,jdbcType=INTEGER},
+      </if>
+      <if test="skinUpSkincolor != null">
+        skin_up_skinColor = #{skinUpSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinUpImgurl != null">
+        skin_up_imgUrl = #{skinUpImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownSkincolor != null">
+        skin_down_skinColor = #{skinDownSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownImgurl != null">
+        skin_down_imgUrl = #{skinDownImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftSkincolor != null">
+        skin_left_skinColor = #{skinLeftSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftImgurl != null">
+        skin_left_imgUrl = #{skinLeftImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightSkincolor != null">
+        skin_right_skinColor = #{skinRightSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightImgurl != null">
+        skin_right_imgUrl = #{skinRightImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeSkincolor != null">
+        skin_fore_skinColor = #{skinForeSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeImgurl != null">
+        skin_fore_imgUrl = #{skinForeImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackSkincolor != null">
+        skin_back_skinColor = #{skinBackSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackImgurl != null">
+        skin_back_imgUrl = #{skinBackImgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Material">
+    update material
+    set name = #{name,jdbcType=VARCHAR},
+      skinColor = #{skincolor,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      isRepeat = #{isrepeat,jdbcType=INTEGER},
+      skin_up_skinColor = #{skinUpSkincolor,jdbcType=VARCHAR},
+      skin_up_imgUrl = #{skinUpImgurl,jdbcType=VARCHAR},
+      skin_down_skinColor = #{skinDownSkincolor,jdbcType=VARCHAR},
+      skin_down_imgUrl = #{skinDownImgurl,jdbcType=VARCHAR},
+      skin_left_skinColor = #{skinLeftSkincolor,jdbcType=VARCHAR},
+      skin_left_imgUrl = #{skinLeftImgurl,jdbcType=VARCHAR},
+      skin_right_skinColor = #{skinRightSkincolor,jdbcType=VARCHAR},
+      skin_right_imgUrl = #{skinRightImgurl,jdbcType=VARCHAR},
+      skin_fore_skinColor = #{skinForeSkincolor,jdbcType=VARCHAR},
+      skin_fore_imgUrl = #{skinForeImgurl,jdbcType=VARCHAR},
+      skin_back_skinColor = #{skinBackSkincolor,jdbcType=VARCHAR},
+      skin_back_imgUrl = #{skinBackImgurl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Material">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="skinColor" jdbcType="VARCHAR" property="skincolor" />
+    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
+    <result column="isRepeat" jdbcType="INTEGER" property="isrepeat" />
+    <result column="skin_up_skinColor" jdbcType="VARCHAR" property="skinUpSkincolor" />
+    <result column="skin_up_imgUrl" jdbcType="VARCHAR" property="skinUpImgurl" />
+    <result column="skin_down_skinColor" jdbcType="VARCHAR" property="skinDownSkincolor" />
+    <result column="skin_down_imgUrl" jdbcType="VARCHAR" property="skinDownImgurl" />
+    <result column="skin_left_skinColor" jdbcType="VARCHAR" property="skinLeftSkincolor" />
+    <result column="skin_left_imgUrl" jdbcType="VARCHAR" property="skinLeftImgurl" />
+    <result column="skin_right_skinColor" jdbcType="VARCHAR" property="skinRightSkincolor" />
+    <result column="skin_right_imgUrl" jdbcType="VARCHAR" property="skinRightImgurl" />
+    <result column="skin_fore_skinColor" jdbcType="VARCHAR" property="skinForeSkincolor" />
+    <result column="skin_fore_imgUrl" jdbcType="VARCHAR" property="skinForeImgurl" />
+    <result column="skin_back_skinColor" jdbcType="VARCHAR" property="skinBackSkincolor" />
+    <result column="skin_back_imgUrl" jdbcType="VARCHAR" property="skinBackImgurl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, skinColor, imgurl, isRepeat, skin_up_skinColor, skin_up_imgUrl, skin_down_skinColor, 
+    skin_down_imgUrl, skin_left_skinColor, skin_left_imgUrl, skin_right_skinColor, skin_right_imgUrl, 
+    skin_fore_skinColor, skin_fore_imgUrl, skin_back_skinColor, skin_back_imgUrl
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.MaterialExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.MaterialExample">
+    delete from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Material">
+    insert into material (id, name, skinColor, 
+      imgurl, isRepeat, skin_up_skinColor, 
+      skin_up_imgUrl, skin_down_skinColor, skin_down_imgUrl, 
+      skin_left_skinColor, skin_left_imgUrl, skin_right_skinColor, 
+      skin_right_imgUrl, skin_fore_skinColor, skin_fore_imgUrl, 
+      skin_back_skinColor, skin_back_imgUrl)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{skincolor,jdbcType=VARCHAR}, 
+      #{imgurl,jdbcType=VARCHAR}, #{isrepeat,jdbcType=INTEGER}, #{skinUpSkincolor,jdbcType=VARCHAR}, 
+      #{skinUpImgurl,jdbcType=VARCHAR}, #{skinDownSkincolor,jdbcType=VARCHAR}, #{skinDownImgurl,jdbcType=VARCHAR}, 
+      #{skinLeftSkincolor,jdbcType=VARCHAR}, #{skinLeftImgurl,jdbcType=VARCHAR}, #{skinRightSkincolor,jdbcType=VARCHAR}, 
+      #{skinRightImgurl,jdbcType=VARCHAR}, #{skinForeSkincolor,jdbcType=VARCHAR}, #{skinForeImgurl,jdbcType=VARCHAR}, 
+      #{skinBackSkincolor,jdbcType=VARCHAR}, #{skinBackImgurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Material">
+    insert into material
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="skincolor != null">
+        skinColor,
+      </if>
+      <if test="imgurl != null">
+        imgurl,
+      </if>
+      <if test="isrepeat != null">
+        isRepeat,
+      </if>
+      <if test="skinUpSkincolor != null">
+        skin_up_skinColor,
+      </if>
+      <if test="skinUpImgurl != null">
+        skin_up_imgUrl,
+      </if>
+      <if test="skinDownSkincolor != null">
+        skin_down_skinColor,
+      </if>
+      <if test="skinDownImgurl != null">
+        skin_down_imgUrl,
+      </if>
+      <if test="skinLeftSkincolor != null">
+        skin_left_skinColor,
+      </if>
+      <if test="skinLeftImgurl != null">
+        skin_left_imgUrl,
+      </if>
+      <if test="skinRightSkincolor != null">
+        skin_right_skinColor,
+      </if>
+      <if test="skinRightImgurl != null">
+        skin_right_imgUrl,
+      </if>
+      <if test="skinForeSkincolor != null">
+        skin_fore_skinColor,
+      </if>
+      <if test="skinForeImgurl != null">
+        skin_fore_imgUrl,
+      </if>
+      <if test="skinBackSkincolor != null">
+        skin_back_skinColor,
+      </if>
+      <if test="skinBackImgurl != null">
+        skin_back_imgUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="skincolor != null">
+        #{skincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isrepeat != null">
+        #{isrepeat,jdbcType=INTEGER},
+      </if>
+      <if test="skinUpSkincolor != null">
+        #{skinUpSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinUpImgurl != null">
+        #{skinUpImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownSkincolor != null">
+        #{skinDownSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownImgurl != null">
+        #{skinDownImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftSkincolor != null">
+        #{skinLeftSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftImgurl != null">
+        #{skinLeftImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightSkincolor != null">
+        #{skinRightSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightImgurl != null">
+        #{skinRightImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeSkincolor != null">
+        #{skinForeSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeImgurl != null">
+        #{skinForeImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackSkincolor != null">
+        #{skinBackSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackImgurl != null">
+        #{skinBackImgurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.MaterialExample" resultType="java.lang.Integer">
+    select count(*) from material
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update material
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skincolor != null">
+        skinColor = #{record.skincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgurl != null">
+        imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isrepeat != null">
+        isRepeat = #{record.isrepeat,jdbcType=INTEGER},
+      </if>
+      <if test="record.skinUpSkincolor != null">
+        skin_up_skinColor = #{record.skinUpSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinUpImgurl != null">
+        skin_up_imgUrl = #{record.skinUpImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinDownSkincolor != null">
+        skin_down_skinColor = #{record.skinDownSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinDownImgurl != null">
+        skin_down_imgUrl = #{record.skinDownImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinLeftSkincolor != null">
+        skin_left_skinColor = #{record.skinLeftSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinLeftImgurl != null">
+        skin_left_imgUrl = #{record.skinLeftImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinRightSkincolor != null">
+        skin_right_skinColor = #{record.skinRightSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinRightImgurl != null">
+        skin_right_imgUrl = #{record.skinRightImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinForeSkincolor != null">
+        skin_fore_skinColor = #{record.skinForeSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinForeImgurl != null">
+        skin_fore_imgUrl = #{record.skinForeImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinBackSkincolor != null">
+        skin_back_skinColor = #{record.skinBackSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skinBackImgurl != null">
+        skin_back_imgUrl = #{record.skinBackImgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update material
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      skinColor = #{record.skincolor,jdbcType=VARCHAR},
+      imgurl = #{record.imgurl,jdbcType=VARCHAR},
+      isRepeat = #{record.isrepeat,jdbcType=INTEGER},
+      skin_up_skinColor = #{record.skinUpSkincolor,jdbcType=VARCHAR},
+      skin_up_imgUrl = #{record.skinUpImgurl,jdbcType=VARCHAR},
+      skin_down_skinColor = #{record.skinDownSkincolor,jdbcType=VARCHAR},
+      skin_down_imgUrl = #{record.skinDownImgurl,jdbcType=VARCHAR},
+      skin_left_skinColor = #{record.skinLeftSkincolor,jdbcType=VARCHAR},
+      skin_left_imgUrl = #{record.skinLeftImgurl,jdbcType=VARCHAR},
+      skin_right_skinColor = #{record.skinRightSkincolor,jdbcType=VARCHAR},
+      skin_right_imgUrl = #{record.skinRightImgurl,jdbcType=VARCHAR},
+      skin_fore_skinColor = #{record.skinForeSkincolor,jdbcType=VARCHAR},
+      skin_fore_imgUrl = #{record.skinForeImgurl,jdbcType=VARCHAR},
+      skin_back_skinColor = #{record.skinBackSkincolor,jdbcType=VARCHAR},
+      skin_back_imgUrl = #{record.skinBackImgurl,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Material">
+    update material
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="skincolor != null">
+        skinColor = #{skincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="isrepeat != null">
+        isRepeat = #{isrepeat,jdbcType=INTEGER},
+      </if>
+      <if test="skinUpSkincolor != null">
+        skin_up_skinColor = #{skinUpSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinUpImgurl != null">
+        skin_up_imgUrl = #{skinUpImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownSkincolor != null">
+        skin_down_skinColor = #{skinDownSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinDownImgurl != null">
+        skin_down_imgUrl = #{skinDownImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftSkincolor != null">
+        skin_left_skinColor = #{skinLeftSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinLeftImgurl != null">
+        skin_left_imgUrl = #{skinLeftImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightSkincolor != null">
+        skin_right_skinColor = #{skinRightSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinRightImgurl != null">
+        skin_right_imgUrl = #{skinRightImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeSkincolor != null">
+        skin_fore_skinColor = #{skinForeSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinForeImgurl != null">
+        skin_fore_imgUrl = #{skinForeImgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackSkincolor != null">
+        skin_back_skinColor = #{skinBackSkincolor,jdbcType=VARCHAR},
+      </if>
+      <if test="skinBackImgurl != null">
+        skin_back_imgUrl = #{skinBackImgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Material">
+    update material
+    set name = #{name,jdbcType=VARCHAR},
+      skinColor = #{skincolor,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      isRepeat = #{isrepeat,jdbcType=INTEGER},
+      skin_up_skinColor = #{skinUpSkincolor,jdbcType=VARCHAR},
+      skin_up_imgUrl = #{skinUpImgurl,jdbcType=VARCHAR},
+      skin_down_skinColor = #{skinDownSkincolor,jdbcType=VARCHAR},
+      skin_down_imgUrl = #{skinDownImgurl,jdbcType=VARCHAR},
+      skin_left_skinColor = #{skinLeftSkincolor,jdbcType=VARCHAR},
+      skin_left_imgUrl = #{skinLeftImgurl,jdbcType=VARCHAR},
+      skin_right_skinColor = #{skinRightSkincolor,jdbcType=VARCHAR},
+      skin_right_imgUrl = #{skinRightImgurl,jdbcType=VARCHAR},
+      skin_fore_skinColor = #{skinForeSkincolor,jdbcType=VARCHAR},
+      skin_fore_imgUrl = #{skinForeImgurl,jdbcType=VARCHAR},
+      skin_back_skinColor = #{skinBackSkincolor,jdbcType=VARCHAR},
+      skin_back_imgUrl = #{skinBackImgurl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -23,5 +23,15 @@ function exist(obj) {
 
 function debug(name, value)
 {
-};
+}
+
+function DoubleFormater(value,row,index) {
+    return value.toFixed(2);
+}
+function PercentFormater(value, row, index) {
+    return value.toFixed(2) + '%';
+}
+
+// 全局变量
+var intervamManager = -1;
 

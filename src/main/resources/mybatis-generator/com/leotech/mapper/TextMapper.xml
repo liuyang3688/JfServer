@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.leotech.mapper.TextMapper" >
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Text" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="isShow" property="isshow" jdbcType="INTEGER" />
+    <result column="font" property="font" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="labelIds" property="labelids" jdbcType="VARCHAR" />
+    <result column="offX" property="offx" jdbcType="DOUBLE" />
+    <result column="offY" property="offy" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, isShow, font, color, text, labelIds, offX, offY
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.leotech.entity.TextExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from text
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from text
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from text
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.TextExample" >
+    delete from text
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Text" >
+    insert into text (id, name, isShow, 
+      font, color, text, 
+      labelIds, offX, offY)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{isshow,jdbcType=INTEGER}, 
+      #{font,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+      #{labelids,jdbcType=VARCHAR}, #{offx,jdbcType=DOUBLE}, #{offy,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Text" >
+    insert into text
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="isshow != null" >
+        isShow,
+      </if>
+      <if test="font != null" >
+        font,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+      <if test="labelids != null" >
+        labelIds,
+      </if>
+      <if test="offx != null" >
+        offX,
+      </if>
+      <if test="offy != null" >
+        offY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null" >
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="font != null" >
+        #{font,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="labelids != null" >
+        #{labelids,jdbcType=VARCHAR},
+      </if>
+      <if test="offx != null" >
+        #{offx,jdbcType=DOUBLE},
+      </if>
+      <if test="offy != null" >
+        #{offy,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.TextExample" resultType="java.lang.Integer" >
+    select count(*) from text
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update text
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null" >
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.font != null" >
+        font = #{record.font,jdbcType=VARCHAR},
+      </if>
+      <if test="record.color != null" >
+        color = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.text != null" >
+        text = #{record.text,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelids != null" >
+        labelIds = #{record.labelids,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offx != null" >
+        offX = #{record.offx,jdbcType=DOUBLE},
+      </if>
+      <if test="record.offy != null" >
+        offY = #{record.offy,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update text
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      font = #{record.font,jdbcType=VARCHAR},
+      color = #{record.color,jdbcType=VARCHAR},
+      text = #{record.text,jdbcType=VARCHAR},
+      labelIds = #{record.labelids,jdbcType=VARCHAR},
+      offX = #{record.offx,jdbcType=DOUBLE},
+      offY = #{record.offy,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Text" >
+    update text
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null" >
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="font != null" >
+        font = #{font,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="labelids != null" >
+        labelIds = #{labelids,jdbcType=VARCHAR},
+      </if>
+      <if test="offx != null" >
+        offX = #{offx,jdbcType=DOUBLE},
+      </if>
+      <if test="offy != null" >
+        offY = #{offy,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Text" >
+    update text
+    set name = #{name,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      font = #{font,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      text = #{text,jdbcType=VARCHAR},
+      labelIds = #{labelids,jdbcType=VARCHAR},
+      offX = #{offx,jdbcType=DOUBLE},
+      offY = #{offy,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

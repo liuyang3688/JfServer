@@ -208,20 +208,22 @@ var datagrid_columns_text = [[
 ]];
 var datagrid_columns_stats_space = [[
     {field:'name',title:'机柜编码',width:80},
+    {field:'cabName',title:'机柜名称',width:100},
     {field:'totalU',title:'总U数',width:80},
     {field:'usedU',title:'已用U数',width:80},
     {field:'remainU',title:'剩余U数',width:80},
     {field:'maxConsU',title:'最大连续U数',width:80},
-    {field:'spaceRatio',title:'空间利用率',width:200},
+    {field:'spaceRatio',title:'空间利用率',width:200, formatter: PercentFormater},
     {field:'areaName',title:'所属分区名',width:200},
     {field:'systemName',title:'所属系统名',width:200},
 ]];
 var datagrid_columns_stats_load = [[
     {field:'name',title:'机柜编码',width:100},
+    {field:'cabName',title:'机柜名称',width:100},
     {field:'totalCap',title:'总负载',width:100},
     {field:'usedCap',title:'已用负载',width:100},
     {field:'remainCap',title:'剩余负载',width:100},
-    {field:'loadRatio',title:'负载利用率',width:200},
+    {field:'loadRatio',title:'负载利用率',width:200, formatter: PercentFormater},
     {field:'areaName',title:'所属分区名',width:200},
     {field:'systemName',title:'所属系统名',width:200},
 ]];

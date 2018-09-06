@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leotech.mapper.MeshMapper">
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Mesh">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="isShow" jdbcType="INTEGER" property="isshow" />
+    <result column="length" jdbcType="DOUBLE" property="length" />
+    <result column="width" jdbcType="DOUBLE" property="width" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="pos_x" jdbcType="DOUBLE" property="posX" />
+    <result column="pos_y" jdbcType="DOUBLE" property="posY" />
+    <result column="pos_z" jdbcType="DOUBLE" property="posZ" />
+    <result column="rot_x" jdbcType="DOUBLE" property="rotX" />
+    <result column="rot_y" jdbcType="DOUBLE" property="rotY" />
+    <result column="rot_z" jdbcType="DOUBLE" property="rotZ" />
+    <result column="scl_x" jdbcType="DOUBLE" property="sclX" />
+    <result column="scl_y" jdbcType="DOUBLE" property="sclY" />
+    <result column="scl_z" jdbcType="DOUBLE" property="sclZ" />
+    <result column="transparent" jdbcType="INTEGER" property="transparent" />
+    <result column="opacity" jdbcType="DOUBLE" property="opacity" />
+    <result column="material" jdbcType="INTEGER" property="material" />
+    <result column="parent" jdbcType="VARCHAR" property="parent" />
+    <result column="opcode" jdbcType="VARCHAR" property="opcode" />
+    <result column="isDirty" jdbcType="TINYINT" property="isdirty" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, type, isShow, length, width, height, pos_x, pos_y, pos_z, rot_x, rot_y, 
+    rot_z, scl_x, scl_y, scl_z, transparent, opacity, material, parent, opcode, isDirty
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.MeshExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mesh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mesh
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mesh
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.MeshExample">
+    delete from mesh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Mesh">
+    insert into mesh (id, name, type, 
+      isShow, length, width, 
+      height, pos_x, pos_y, pos_z, 
+      rot_x, rot_y, rot_z, scl_x, 
+      scl_y, scl_z, transparent, 
+      opacity, material, parent, 
+      opcode, isDirty)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{isshow,jdbcType=INTEGER}, #{length,jdbcType=DOUBLE}, #{width,jdbcType=DOUBLE}, 
+      #{height,jdbcType=DOUBLE}, #{posX,jdbcType=DOUBLE}, #{posY,jdbcType=DOUBLE}, #{posZ,jdbcType=DOUBLE}, 
+      #{rotX,jdbcType=DOUBLE}, #{rotY,jdbcType=DOUBLE}, #{rotZ,jdbcType=DOUBLE}, #{sclX,jdbcType=DOUBLE}, 
+      #{sclY,jdbcType=DOUBLE}, #{sclZ,jdbcType=DOUBLE}, #{transparent,jdbcType=INTEGER}, 
+      #{opacity,jdbcType=DOUBLE}, #{material,jdbcType=INTEGER}, #{parent,jdbcType=VARCHAR}, 
+      #{opcode,jdbcType=VARCHAR}, #{isdirty,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Mesh">
+    insert into mesh
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isshow != null">
+        isShow,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="posX != null">
+        pos_x,
+      </if>
+      <if test="posY != null">
+        pos_y,
+      </if>
+      <if test="posZ != null">
+        pos_z,
+      </if>
+      <if test="rotX != null">
+        rot_x,
+      </if>
+      <if test="rotY != null">
+        rot_y,
+      </if>
+      <if test="rotZ != null">
+        rot_z,
+      </if>
+      <if test="sclX != null">
+        scl_x,
+      </if>
+      <if test="sclY != null">
+        scl_y,
+      </if>
+      <if test="sclZ != null">
+        scl_z,
+      </if>
+      <if test="transparent != null">
+        transparent,
+      </if>
+      <if test="opacity != null">
+        opacity,
+      </if>
+      <if test="material != null">
+        material,
+      </if>
+      <if test="parent != null">
+        parent,
+      </if>
+      <if test="opcode != null">
+        opcode,
+      </if>
+      <if test="isdirty != null">
+        isDirty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="posX != null">
+        #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="transparent != null">
+        #{transparent,jdbcType=INTEGER},
+      </if>
+      <if test="opacity != null">
+        #{opacity,jdbcType=DOUBLE},
+      </if>
+      <if test="material != null">
+        #{material,jdbcType=INTEGER},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="opcode != null">
+        #{opcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        #{isdirty,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.MeshExample" resultType="java.lang.Integer">
+    select count(*) from mesh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mesh
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null">
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.length != null">
+        length = #{record.length,jdbcType=DOUBLE},
+      </if>
+      <if test="record.width != null">
+        width = #{record.width,jdbcType=DOUBLE},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posX != null">
+        pos_x = #{record.posX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posY != null">
+        pos_y = #{record.posY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posZ != null">
+        pos_z = #{record.posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotX != null">
+        rot_x = #{record.rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotY != null">
+        rot_y = #{record.rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotZ != null">
+        rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclX != null">
+        scl_x = #{record.sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclY != null">
+        scl_y = #{record.sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclZ != null">
+        scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.transparent != null">
+        transparent = #{record.transparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.opacity != null">
+        opacity = #{record.opacity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.material != null">
+        material = #{record.material,jdbcType=INTEGER},
+      </if>
+      <if test="record.parent != null">
+        parent = #{record.parent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opcode != null">
+        opcode = #{record.opcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdirty != null">
+        isDirty = #{record.isdirty,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mesh
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      length = #{record.length,jdbcType=DOUBLE},
+      width = #{record.width,jdbcType=DOUBLE},
+      height = #{record.height,jdbcType=DOUBLE},
+      pos_x = #{record.posX,jdbcType=DOUBLE},
+      pos_y = #{record.posY,jdbcType=DOUBLE},
+      pos_z = #{record.posZ,jdbcType=DOUBLE},
+      rot_x = #{record.rotX,jdbcType=DOUBLE},
+      rot_y = #{record.rotY,jdbcType=DOUBLE},
+      rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      scl_x = #{record.sclX,jdbcType=DOUBLE},
+      scl_y = #{record.sclY,jdbcType=DOUBLE},
+      scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      transparent = #{record.transparent,jdbcType=INTEGER},
+      opacity = #{record.opacity,jdbcType=DOUBLE},
+      material = #{record.material,jdbcType=INTEGER},
+      parent = #{record.parent,jdbcType=VARCHAR},
+      opcode = #{record.opcode,jdbcType=VARCHAR},
+      isDirty = #{record.isdirty,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Mesh">
+    update mesh
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="length != null">
+        length = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="posX != null">
+        pos_x = #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        pos_y = #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        pos_z = #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        rot_x = #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        rot_y = #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        rot_z = #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        scl_x = #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        scl_y = #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        scl_z = #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="transparent != null">
+        transparent = #{transparent,jdbcType=INTEGER},
+      </if>
+      <if test="opacity != null">
+        opacity = #{opacity,jdbcType=DOUBLE},
+      </if>
+      <if test="material != null">
+        material = #{material,jdbcType=INTEGER},
+      </if>
+      <if test="parent != null">
+        parent = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="opcode != null">
+        opcode = #{opcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        isDirty = #{isdirty,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Mesh">
+    update mesh
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      length = #{length,jdbcType=DOUBLE},
+      width = #{width,jdbcType=DOUBLE},
+      height = #{height,jdbcType=DOUBLE},
+      pos_x = #{posX,jdbcType=DOUBLE},
+      pos_y = #{posY,jdbcType=DOUBLE},
+      pos_z = #{posZ,jdbcType=DOUBLE},
+      rot_x = #{rotX,jdbcType=DOUBLE},
+      rot_y = #{rotY,jdbcType=DOUBLE},
+      rot_z = #{rotZ,jdbcType=DOUBLE},
+      scl_x = #{sclX,jdbcType=DOUBLE},
+      scl_y = #{sclY,jdbcType=DOUBLE},
+      scl_z = #{sclZ,jdbcType=DOUBLE},
+      transparent = #{transparent,jdbcType=INTEGER},
+      opacity = #{opacity,jdbcType=DOUBLE},
+      material = #{material,jdbcType=INTEGER},
+      parent = #{parent,jdbcType=VARCHAR},
+      opcode = #{opcode,jdbcType=VARCHAR},
+      isDirty = #{isdirty,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Mesh">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="isShow" jdbcType="INTEGER" property="isshow" />
+    <result column="length" jdbcType="DOUBLE" property="length" />
+    <result column="width" jdbcType="DOUBLE" property="width" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="pos_x" jdbcType="DOUBLE" property="posX" />
+    <result column="pos_y" jdbcType="DOUBLE" property="posY" />
+    <result column="pos_z" jdbcType="DOUBLE" property="posZ" />
+    <result column="rot_x" jdbcType="DOUBLE" property="rotX" />
+    <result column="rot_y" jdbcType="DOUBLE" property="rotY" />
+    <result column="rot_z" jdbcType="DOUBLE" property="rotZ" />
+    <result column="scl_x" jdbcType="DOUBLE" property="sclX" />
+    <result column="scl_y" jdbcType="DOUBLE" property="sclY" />
+    <result column="scl_z" jdbcType="DOUBLE" property="sclZ" />
+    <result column="transparent" jdbcType="INTEGER" property="transparent" />
+    <result column="opacity" jdbcType="DOUBLE" property="opacity" />
+    <result column="material" jdbcType="INTEGER" property="material" />
+    <result column="parent" jdbcType="VARCHAR" property="parent" />
+    <result column="opcode" jdbcType="VARCHAR" property="opcode" />
+    <result column="isDirty" jdbcType="TINYINT" property="isdirty" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, type, isShow, length, width, height, pos_x, pos_y, pos_z, rot_x, rot_y, 
+    rot_z, scl_x, scl_y, scl_z, transparent, opacity, material, parent, opcode, isDirty
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.MeshExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mesh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mesh
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mesh
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.MeshExample">
+    delete from mesh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Mesh">
+    insert into mesh (id, name, type, 
+      isShow, length, width, 
+      height, pos_x, pos_y, pos_z, 
+      rot_x, rot_y, rot_z, scl_x, 
+      scl_y, scl_z, transparent, 
+      opacity, material, parent, 
+      opcode, isDirty)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{isshow,jdbcType=INTEGER}, #{length,jdbcType=DOUBLE}, #{width,jdbcType=DOUBLE}, 
+      #{height,jdbcType=DOUBLE}, #{posX,jdbcType=DOUBLE}, #{posY,jdbcType=DOUBLE}, #{posZ,jdbcType=DOUBLE}, 
+      #{rotX,jdbcType=DOUBLE}, #{rotY,jdbcType=DOUBLE}, #{rotZ,jdbcType=DOUBLE}, #{sclX,jdbcType=DOUBLE}, 
+      #{sclY,jdbcType=DOUBLE}, #{sclZ,jdbcType=DOUBLE}, #{transparent,jdbcType=INTEGER}, 
+      #{opacity,jdbcType=DOUBLE}, #{material,jdbcType=INTEGER}, #{parent,jdbcType=VARCHAR}, 
+      #{opcode,jdbcType=VARCHAR}, #{isdirty,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Mesh">
+    insert into mesh
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isshow != null">
+        isShow,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="posX != null">
+        pos_x,
+      </if>
+      <if test="posY != null">
+        pos_y,
+      </if>
+      <if test="posZ != null">
+        pos_z,
+      </if>
+      <if test="rotX != null">
+        rot_x,
+      </if>
+      <if test="rotY != null">
+        rot_y,
+      </if>
+      <if test="rotZ != null">
+        rot_z,
+      </if>
+      <if test="sclX != null">
+        scl_x,
+      </if>
+      <if test="sclY != null">
+        scl_y,
+      </if>
+      <if test="sclZ != null">
+        scl_z,
+      </if>
+      <if test="transparent != null">
+        transparent,
+      </if>
+      <if test="opacity != null">
+        opacity,
+      </if>
+      <if test="material != null">
+        material,
+      </if>
+      <if test="parent != null">
+        parent,
+      </if>
+      <if test="opcode != null">
+        opcode,
+      </if>
+      <if test="isdirty != null">
+        isDirty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="posX != null">
+        #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="transparent != null">
+        #{transparent,jdbcType=INTEGER},
+      </if>
+      <if test="opacity != null">
+        #{opacity,jdbcType=DOUBLE},
+      </if>
+      <if test="material != null">
+        #{material,jdbcType=INTEGER},
+      </if>
+      <if test="parent != null">
+        #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="opcode != null">
+        #{opcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        #{isdirty,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.MeshExample" resultType="java.lang.Integer">
+    select count(*) from mesh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mesh
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isshow != null">
+        isShow = #{record.isshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.length != null">
+        length = #{record.length,jdbcType=DOUBLE},
+      </if>
+      <if test="record.width != null">
+        width = #{record.width,jdbcType=DOUBLE},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posX != null">
+        pos_x = #{record.posX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posY != null">
+        pos_y = #{record.posY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.posZ != null">
+        pos_z = #{record.posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotX != null">
+        rot_x = #{record.rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotY != null">
+        rot_y = #{record.rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rotZ != null">
+        rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclX != null">
+        scl_x = #{record.sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclY != null">
+        scl_y = #{record.sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="record.sclZ != null">
+        scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="record.transparent != null">
+        transparent = #{record.transparent,jdbcType=INTEGER},
+      </if>
+      <if test="record.opacity != null">
+        opacity = #{record.opacity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.material != null">
+        material = #{record.material,jdbcType=INTEGER},
+      </if>
+      <if test="record.parent != null">
+        parent = #{record.parent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opcode != null">
+        opcode = #{record.opcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdirty != null">
+        isDirty = #{record.isdirty,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mesh
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      isShow = #{record.isshow,jdbcType=INTEGER},
+      length = #{record.length,jdbcType=DOUBLE},
+      width = #{record.width,jdbcType=DOUBLE},
+      height = #{record.height,jdbcType=DOUBLE},
+      pos_x = #{record.posX,jdbcType=DOUBLE},
+      pos_y = #{record.posY,jdbcType=DOUBLE},
+      pos_z = #{record.posZ,jdbcType=DOUBLE},
+      rot_x = #{record.rotX,jdbcType=DOUBLE},
+      rot_y = #{record.rotY,jdbcType=DOUBLE},
+      rot_z = #{record.rotZ,jdbcType=DOUBLE},
+      scl_x = #{record.sclX,jdbcType=DOUBLE},
+      scl_y = #{record.sclY,jdbcType=DOUBLE},
+      scl_z = #{record.sclZ,jdbcType=DOUBLE},
+      transparent = #{record.transparent,jdbcType=INTEGER},
+      opacity = #{record.opacity,jdbcType=DOUBLE},
+      material = #{record.material,jdbcType=INTEGER},
+      parent = #{record.parent,jdbcType=VARCHAR},
+      opcode = #{record.opcode,jdbcType=VARCHAR},
+      isDirty = #{record.isdirty,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Mesh">
+    update mesh
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="isshow != null">
+        isShow = #{isshow,jdbcType=INTEGER},
+      </if>
+      <if test="length != null">
+        length = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="posX != null">
+        pos_x = #{posX,jdbcType=DOUBLE},
+      </if>
+      <if test="posY != null">
+        pos_y = #{posY,jdbcType=DOUBLE},
+      </if>
+      <if test="posZ != null">
+        pos_z = #{posZ,jdbcType=DOUBLE},
+      </if>
+      <if test="rotX != null">
+        rot_x = #{rotX,jdbcType=DOUBLE},
+      </if>
+      <if test="rotY != null">
+        rot_y = #{rotY,jdbcType=DOUBLE},
+      </if>
+      <if test="rotZ != null">
+        rot_z = #{rotZ,jdbcType=DOUBLE},
+      </if>
+      <if test="sclX != null">
+        scl_x = #{sclX,jdbcType=DOUBLE},
+      </if>
+      <if test="sclY != null">
+        scl_y = #{sclY,jdbcType=DOUBLE},
+      </if>
+      <if test="sclZ != null">
+        scl_z = #{sclZ,jdbcType=DOUBLE},
+      </if>
+      <if test="transparent != null">
+        transparent = #{transparent,jdbcType=INTEGER},
+      </if>
+      <if test="opacity != null">
+        opacity = #{opacity,jdbcType=DOUBLE},
+      </if>
+      <if test="material != null">
+        material = #{material,jdbcType=INTEGER},
+      </if>
+      <if test="parent != null">
+        parent = #{parent,jdbcType=VARCHAR},
+      </if>
+      <if test="opcode != null">
+        opcode = #{opcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isdirty != null">
+        isDirty = #{isdirty,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Mesh">
+    update mesh
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      isShow = #{isshow,jdbcType=INTEGER},
+      length = #{length,jdbcType=DOUBLE},
+      width = #{width,jdbcType=DOUBLE},
+      height = #{height,jdbcType=DOUBLE},
+      pos_x = #{posX,jdbcType=DOUBLE},
+      pos_y = #{posY,jdbcType=DOUBLE},
+      pos_z = #{posZ,jdbcType=DOUBLE},
+      rot_x = #{rotX,jdbcType=DOUBLE},
+      rot_y = #{rotY,jdbcType=DOUBLE},
+      rot_z = #{rotZ,jdbcType=DOUBLE},
+      scl_x = #{sclX,jdbcType=DOUBLE},
+      scl_y = #{sclY,jdbcType=DOUBLE},
+      scl_z = #{sclZ,jdbcType=DOUBLE},
+      transparent = #{transparent,jdbcType=INTEGER},
+      opacity = #{opacity,jdbcType=DOUBLE},
+      material = #{material,jdbcType=INTEGER},
+      parent = #{parent,jdbcType=VARCHAR},
+      opcode = #{opcode,jdbcType=VARCHAR},
+      isDirty = #{isdirty,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

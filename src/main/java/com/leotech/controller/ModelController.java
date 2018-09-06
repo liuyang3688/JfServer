@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.leotech.entity.*;
 import com.leotech.entity.System;
+import com.leotech.model.Triple;
 import com.leotech.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("model")
@@ -184,5 +187,52 @@ public class ModelController {
     @RequestMapping("get_all_text")
     public List<Text> getAllText(Model model){
         return textService.getAll();
+    }
+
+    // 实时数据
+    @RequestMapping("get_rt_yc")
+    public List<YcData> getRtYc(@RequestParam int bjlx, @RequestParam int bjid)
+    {
+        List<YcData> list = new ArrayList<>();
+        try{
+            JSONObject obj = RtService.loadBjcsLabel();
+            Map<Triple, Double> map = RtService.getRtMap();
+            for (Triple triple : map.keySet()) {
+                if (triple.bjlx == bjlx && triple.bjid == bjid && triple.bjcs<1000) {
+                    YcData ycdata = new YcData();
+                    ycdata.setId(triple.bjcs);
+                    ycdata.setName(obj.getString(String.valueOf(triple.bjlx) + "-" +String.valueOf(triple.bjcs)));
+                    ycdata.setValue(map.get(triple));
+                    list.add(ycdata);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    @RequestMapping("get_rt_yx")
+    public List<YxData> getRtYx(@RequestParam int bjlx, @RequestParam int bjid)
+    {
+        List<YxData> list = new ArrayList<>();
+        try{
+            JSONObject obj = RtService.loadBjcsLabel();
+            Map<Triple, Double> map = RtService.getRtMap();
+            for (Triple triple : map.keySet()) {
+                if (triple.bjlx == bjlx && triple.bjid == bjid && triple.bjcs>=1000) {
+                    YxData yxdata = new YxData();
+                    yxdata.setId(triple.bjcs-1000);
+                    yxdata.setName(obj.getString(String.valueOf(triple.bjlx) + "-" + String.valueOf(triple.bjcs)));
+                    double val = map.get(triple);
+                    yxdata.setValue((int)val);
+                    list.add(yxdata);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }

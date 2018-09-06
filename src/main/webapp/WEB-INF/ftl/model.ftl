@@ -41,7 +41,7 @@
     </div>
     <#--框架中右-->
     <div class="layout-main" data-options="region:'center',iconCls:'icon-table'" title="管理区" >
-        <div class="main-table">
+        <div id="dg_wrapper" class="main-table" style="display: none">
             <table id="dg" class="easyui-datagrid" title="详细信息" style="min-height:710px;">
                 <#--<thead>-->
                 <#--<tr>-->
@@ -54,6 +54,15 @@
                 <#--</tr>-->
                 <#--</thead>-->
             </table>
+        </div>
+        <div id="dg_real_wrapper" class="main-table" >
+            <h3 id="table_title" style="text-align: center; padding: 5px; border-bottom: 1px solid #ccc;margin-bottom: 20px;"></h3>
+            <div id="dg_real_yc_wrapper" style="float: left; padding-left:3%; width: 45%">
+                <table id="dg_real_yc" class="easyui-datagrid" title="遥测数据"  style="min-height:710px;"></table>
+            </div>
+            <div id="dg_real_yx_wrapper" style="float: right; padding-right:3%; width: 45%">
+                <table id="dg_real_yx" class="easyui-datagrid" title="遥信数据"  style="min-height:710px;"></table>
+            </div>
         </div>
     </div>
     <#--框架Footer-->
@@ -300,6 +309,41 @@
         $(function(){
             $('#dg').datagrid('clientPaging');
         });
+
+        // DATAGRID-参数设置
+        $('#table_title').text("1号空调");
+        $('#dg_real_yc').datagrid({
+            fit: true,
+            collapsible:true,
+            tname:'yc',
+            url:'${g.base}/model/get_rt_yc?bjlx=1&bjid=1',
+            columns:[[
+                {field:'id',title:'遥测序号',width:100},
+                {field:'name',title:'遥测名称',width:200},
+                {field:'value',title:'遥测值',width:100,formatter: DoubleFormater},
+            ]],
+            rownumbers:true,
+            striped:true,
+            emptyMsg: '记录空',
+        });
+        $('#dg_real_yx').datagrid({
+            fit: true,
+            collapsible:true,
+            tname:'yx',
+            url:'${g.base}/model/get_rt_yx?bjlx=1&bjid=1',
+            columns:[[
+                {field:'id',title:'遥测序号',width:100},
+                {field:'name',title:'遥测名称',width:200},
+                {field:'value',title:'遥信值',width:100},
+            ]],
+            rownumbers:true,
+            striped:true,
+            emptyMsg: '记录空',
+        });
+        intervamManager = setInterval(function(){
+            $('#dg_real_yc').datagrid('load');
+            $('#dg_real_yx').datagrid('load');
+        }, 5000);
         // <<<<<<DATAGRID
     });
 </script>

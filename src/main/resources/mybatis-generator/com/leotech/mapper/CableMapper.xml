@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leotech.mapper.CableMapper">
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Cable">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fmCode" jdbcType="VARCHAR" property="fmcode" />
+    <result column="fmDevice" jdbcType="VARCHAR" property="fmdevice" />
+    <result column="toCode" jdbcType="VARCHAR" property="tocode" />
+    <result column="toDevice" jdbcType="VARCHAR" property="todevice" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, fmCode, fmDevice, toCode, toDevice
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.CableExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cable
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cable
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.CableExample">
+    delete from cable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Cable">
+    insert into cable (id, name, fmCode, 
+      fmDevice, toCode, toDevice
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fmcode,jdbcType=VARCHAR}, 
+      #{fmdevice,jdbcType=VARCHAR}, #{tocode,jdbcType=VARCHAR}, #{todevice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Cable">
+    insert into cable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="fmcode != null">
+        fmCode,
+      </if>
+      <if test="fmdevice != null">
+        fmDevice,
+      </if>
+      <if test="tocode != null">
+        toCode,
+      </if>
+      <if test="todevice != null">
+        toDevice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fmcode != null">
+        #{fmcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fmdevice != null">
+        #{fmdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="tocode != null">
+        #{tocode,jdbcType=VARCHAR},
+      </if>
+      <if test="todevice != null">
+        #{todevice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.CableExample" resultType="java.lang.Integer">
+    select count(*) from cable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cable
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmcode != null">
+        fmCode = #{record.fmcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmdevice != null">
+        fmDevice = #{record.fmdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tocode != null">
+        toCode = #{record.tocode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todevice != null">
+        toDevice = #{record.todevice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cable
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      fmCode = #{record.fmcode,jdbcType=VARCHAR},
+      fmDevice = #{record.fmdevice,jdbcType=VARCHAR},
+      toCode = #{record.tocode,jdbcType=VARCHAR},
+      toDevice = #{record.todevice,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Cable">
+    update cable
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fmcode != null">
+        fmCode = #{fmcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fmdevice != null">
+        fmDevice = #{fmdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="tocode != null">
+        toCode = #{tocode,jdbcType=VARCHAR},
+      </if>
+      <if test="todevice != null">
+        toDevice = #{todevice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Cable">
+    update cable
+    set name = #{name,jdbcType=VARCHAR},
+      fmCode = #{fmcode,jdbcType=VARCHAR},
+      fmDevice = #{fmdevice,jdbcType=VARCHAR},
+      toCode = #{tocode,jdbcType=VARCHAR},
+      toDevice = #{todevice,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Cable">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fmCode" jdbcType="VARCHAR" property="fmcode" />
+    <result column="fmDevice" jdbcType="VARCHAR" property="fmdevice" />
+    <result column="toCode" jdbcType="VARCHAR" property="tocode" />
+    <result column="toDevice" jdbcType="VARCHAR" property="todevice" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, fmCode, fmDevice, toCode, toDevice
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.CableExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cable
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cable
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.CableExample">
+    delete from cable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Cable">
+    insert into cable (id, name, fmCode, 
+      fmDevice, toCode, toDevice
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fmcode,jdbcType=VARCHAR}, 
+      #{fmdevice,jdbcType=VARCHAR}, #{tocode,jdbcType=VARCHAR}, #{todevice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Cable">
+    insert into cable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="fmcode != null">
+        fmCode,
+      </if>
+      <if test="fmdevice != null">
+        fmDevice,
+      </if>
+      <if test="tocode != null">
+        toCode,
+      </if>
+      <if test="todevice != null">
+        toDevice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fmcode != null">
+        #{fmcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fmdevice != null">
+        #{fmdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="tocode != null">
+        #{tocode,jdbcType=VARCHAR},
+      </if>
+      <if test="todevice != null">
+        #{todevice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.CableExample" resultType="java.lang.Integer">
+    select count(*) from cable
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cable
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmcode != null">
+        fmCode = #{record.fmcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fmdevice != null">
+        fmDevice = #{record.fmdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tocode != null">
+        toCode = #{record.tocode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todevice != null">
+        toDevice = #{record.todevice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cable
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      fmCode = #{record.fmcode,jdbcType=VARCHAR},
+      fmDevice = #{record.fmdevice,jdbcType=VARCHAR},
+      toCode = #{record.tocode,jdbcType=VARCHAR},
+      toDevice = #{record.todevice,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Cable">
+    update cable
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fmcode != null">
+        fmCode = #{fmcode,jdbcType=VARCHAR},
+      </if>
+      <if test="fmdevice != null">
+        fmDevice = #{fmdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="tocode != null">
+        toCode = #{tocode,jdbcType=VARCHAR},
+      </if>
+      <if test="todevice != null">
+        toDevice = #{todevice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Cable">
+    update cable
+    set name = #{name,jdbcType=VARCHAR},
+      fmCode = #{fmcode,jdbcType=VARCHAR},
+      fmDevice = #{fmdevice,jdbcType=VARCHAR},
+      toCode = #{tocode,jdbcType=VARCHAR},
+      toDevice = #{todevice,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

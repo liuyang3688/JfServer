@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leotech.mapper.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Device">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="typeId" jdbcType="INTEGER" property="typeid" />
+    <result column="typeName" jdbcType="VARCHAR" property="typename" />
+    <result column="cabinet" jdbcType="VARCHAR" property="cabinet" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="pass" jdbcType="VARCHAR" property="pass" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="record" jdbcType="VARCHAR" property="record" />
+    <result column="capacity" jdbcType="DOUBLE" property="capacity" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="modelNo" jdbcType="VARCHAR" property="modelno" />
+    <result column="cpu" jdbcType="VARCHAR" property="cpu" />
+    <result column="memory" jdbcType="VARCHAR" property="memory" />
+    <result column="disk" jdbcType="VARCHAR" property="disk" />
+    <result column="barcode" jdbcType="VARCHAR" property="barcode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, code, name, typeId, typeName, cabinet, user, pass, person, record, capacity, 
+    memo, modelNo, cpu, memory, disk, barcode
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.DeviceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.DeviceExample">
+    delete from device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Device">
+    insert into device (id, code, name, 
+      typeId, typeName, cabinet, 
+      user, pass, person, 
+      record, capacity, memo, 
+      modelNo, cpu, memory, 
+      disk, barcode)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{typeid,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR}, #{cabinet,jdbcType=VARCHAR}, 
+      #{user,jdbcType=VARCHAR}, #{pass,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, 
+      #{record,jdbcType=VARCHAR}, #{capacity,jdbcType=DOUBLE}, #{memo,jdbcType=VARCHAR}, 
+      #{modelno,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, 
+      #{disk,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Device">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="typeid != null">
+        typeId,
+      </if>
+      <if test="typename != null">
+        typeName,
+      </if>
+      <if test="cabinet != null">
+        cabinet,
+      </if>
+      <if test="user != null">
+        user,
+      </if>
+      <if test="pass != null">
+        pass,
+      </if>
+      <if test="person != null">
+        person,
+      </if>
+      <if test="record != null">
+        record,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="modelno != null">
+        modelNo,
+      </if>
+      <if test="cpu != null">
+        cpu,
+      </if>
+      <if test="memory != null">
+        memory,
+      </if>
+      <if test="disk != null">
+        disk,
+      </if>
+      <if test="barcode != null">
+        barcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="cabinet != null">
+        #{cabinet,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="record != null">
+        #{record,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=DOUBLE},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelno != null">
+        #{modelno,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="disk != null">
+        #{disk,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null">
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.DeviceExample" resultType="java.lang.Integer">
+    select count(*) from device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update device
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        typeId = #{record.typeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.typename != null">
+        typeName = #{record.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cabinet != null">
+        cabinet = #{record.cabinet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user != null">
+        user = #{record.user,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pass != null">
+        pass = #{record.pass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.person != null">
+        person = #{record.person,jdbcType=VARCHAR},
+      </if>
+      <if test="record.record != null">
+        record = #{record.record,jdbcType=VARCHAR},
+      </if>
+      <if test="record.capacity != null">
+        capacity = #{record.capacity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelno != null">
+        modelNo = #{record.modelno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpu != null">
+        cpu = #{record.cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memory != null">
+        memory = #{record.memory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disk != null">
+        disk = #{record.disk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barcode != null">
+        barcode = #{record.barcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update device
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      typeId = #{record.typeid,jdbcType=INTEGER},
+      typeName = #{record.typename,jdbcType=VARCHAR},
+      cabinet = #{record.cabinet,jdbcType=VARCHAR},
+      user = #{record.user,jdbcType=VARCHAR},
+      pass = #{record.pass,jdbcType=VARCHAR},
+      person = #{record.person,jdbcType=VARCHAR},
+      record = #{record.record,jdbcType=VARCHAR},
+      capacity = #{record.capacity,jdbcType=DOUBLE},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      modelNo = #{record.modelno,jdbcType=VARCHAR},
+      cpu = #{record.cpu,jdbcType=VARCHAR},
+      memory = #{record.memory,jdbcType=VARCHAR},
+      disk = #{record.disk,jdbcType=VARCHAR},
+      barcode = #{record.barcode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Device">
+    update device
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        typeId = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        typeName = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="cabinet != null">
+        cabinet = #{cabinet,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        pass = #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        person = #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="record != null">
+        record = #{record,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=DOUBLE},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelno != null">
+        modelNo = #{modelno,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        memory = #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="disk != null">
+        disk = #{disk,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null">
+        barcode = #{barcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Device">
+    update device
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      typeId = #{typeid,jdbcType=INTEGER},
+      typeName = #{typename,jdbcType=VARCHAR},
+      cabinet = #{cabinet,jdbcType=VARCHAR},
+      user = #{user,jdbcType=VARCHAR},
+      pass = #{pass,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      record = #{record,jdbcType=VARCHAR},
+      capacity = #{capacity,jdbcType=DOUBLE},
+      memo = #{memo,jdbcType=VARCHAR},
+      modelNo = #{modelno,jdbcType=VARCHAR},
+      cpu = #{cpu,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=VARCHAR},
+      disk = #{disk,jdbcType=VARCHAR},
+      barcode = #{barcode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.leotech.entity.Device">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="typeId" jdbcType="INTEGER" property="typeid" />
+    <result column="typeName" jdbcType="VARCHAR" property="typename" />
+    <result column="cabinet" jdbcType="VARCHAR" property="cabinet" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="pass" jdbcType="VARCHAR" property="pass" />
+    <result column="person" jdbcType="VARCHAR" property="person" />
+    <result column="record" jdbcType="VARCHAR" property="record" />
+    <result column="capacity" jdbcType="DOUBLE" property="capacity" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="modelNo" jdbcType="VARCHAR" property="modelno" />
+    <result column="cpu" jdbcType="VARCHAR" property="cpu" />
+    <result column="memory" jdbcType="VARCHAR" property="memory" />
+    <result column="disk" jdbcType="VARCHAR" property="disk" />
+    <result column="barcode" jdbcType="VARCHAR" property="barcode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, code, name, typeId, typeName, cabinet, user, pass, person, record, capacity, 
+    memo, modelNo, cpu, memory, disk, barcode
+  </sql>
+  <select id="selectByExample" parameterType="com.leotech.entity.DeviceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.leotech.entity.DeviceExample">
+    delete from device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.leotech.entity.Device">
+    insert into device (id, code, name, 
+      typeId, typeName, cabinet, 
+      user, pass, person, 
+      record, capacity, memo, 
+      modelNo, cpu, memory, 
+      disk, barcode)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{typeid,jdbcType=INTEGER}, #{typename,jdbcType=VARCHAR}, #{cabinet,jdbcType=VARCHAR}, 
+      #{user,jdbcType=VARCHAR}, #{pass,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, 
+      #{record,jdbcType=VARCHAR}, #{capacity,jdbcType=DOUBLE}, #{memo,jdbcType=VARCHAR}, 
+      #{modelno,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, #{memory,jdbcType=VARCHAR}, 
+      #{disk,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leotech.entity.Device">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="typeid != null">
+        typeId,
+      </if>
+      <if test="typename != null">
+        typeName,
+      </if>
+      <if test="cabinet != null">
+        cabinet,
+      </if>
+      <if test="user != null">
+        user,
+      </if>
+      <if test="pass != null">
+        pass,
+      </if>
+      <if test="person != null">
+        person,
+      </if>
+      <if test="record != null">
+        record,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="modelno != null">
+        modelNo,
+      </if>
+      <if test="cpu != null">
+        cpu,
+      </if>
+      <if test="memory != null">
+        memory,
+      </if>
+      <if test="disk != null">
+        disk,
+      </if>
+      <if test="barcode != null">
+        barcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="cabinet != null">
+        #{cabinet,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="record != null">
+        #{record,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=DOUBLE},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelno != null">
+        #{modelno,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="disk != null">
+        #{disk,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null">
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.leotech.entity.DeviceExample" resultType="java.lang.Integer">
+    select count(*) from device
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update device
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        typeId = #{record.typeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.typename != null">
+        typeName = #{record.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cabinet != null">
+        cabinet = #{record.cabinet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.user != null">
+        user = #{record.user,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pass != null">
+        pass = #{record.pass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.person != null">
+        person = #{record.person,jdbcType=VARCHAR},
+      </if>
+      <if test="record.record != null">
+        record = #{record.record,jdbcType=VARCHAR},
+      </if>
+      <if test="record.capacity != null">
+        capacity = #{record.capacity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.memo != null">
+        memo = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelno != null">
+        modelNo = #{record.modelno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpu != null">
+        cpu = #{record.cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memory != null">
+        memory = #{record.memory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disk != null">
+        disk = #{record.disk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.barcode != null">
+        barcode = #{record.barcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update device
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      typeId = #{record.typeid,jdbcType=INTEGER},
+      typeName = #{record.typename,jdbcType=VARCHAR},
+      cabinet = #{record.cabinet,jdbcType=VARCHAR},
+      user = #{record.user,jdbcType=VARCHAR},
+      pass = #{record.pass,jdbcType=VARCHAR},
+      person = #{record.person,jdbcType=VARCHAR},
+      record = #{record.record,jdbcType=VARCHAR},
+      capacity = #{record.capacity,jdbcType=DOUBLE},
+      memo = #{record.memo,jdbcType=VARCHAR},
+      modelNo = #{record.modelno,jdbcType=VARCHAR},
+      cpu = #{record.cpu,jdbcType=VARCHAR},
+      memory = #{record.memory,jdbcType=VARCHAR},
+      disk = #{record.disk,jdbcType=VARCHAR},
+      barcode = #{record.barcode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leotech.entity.Device">
+    update device
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        typeId = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null">
+        typeName = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="cabinet != null">
+        cabinet = #{cabinet,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null">
+        pass = #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        person = #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="record != null">
+        record = #{record,jdbcType=VARCHAR},
+      </if>
+      <if test="capacity != null">
+        capacity = #{capacity,jdbcType=DOUBLE},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="modelno != null">
+        modelNo = #{modelno,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="memory != null">
+        memory = #{memory,jdbcType=VARCHAR},
+      </if>
+      <if test="disk != null">
+        disk = #{disk,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null">
+        barcode = #{barcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leotech.entity.Device">
+    update device
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      typeId = #{typeid,jdbcType=INTEGER},
+      typeName = #{typename,jdbcType=VARCHAR},
+      cabinet = #{cabinet,jdbcType=VARCHAR},
+      user = #{user,jdbcType=VARCHAR},
+      pass = #{pass,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      record = #{record,jdbcType=VARCHAR},
+      capacity = #{capacity,jdbcType=DOUBLE},
+      memo = #{memo,jdbcType=VARCHAR},
+      modelNo = #{modelno,jdbcType=VARCHAR},
+      cpu = #{cpu,jdbcType=VARCHAR},
+      memory = #{memory,jdbcType=VARCHAR},
+      disk = #{disk,jdbcType=VARCHAR},
+      barcode = #{barcode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

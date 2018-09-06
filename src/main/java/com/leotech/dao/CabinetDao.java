@@ -70,12 +70,13 @@ public class CabinetDao extends ExHibernateDaoSupport {
         final JSONArray cabs = new JSONArray();
         try {
             String sqlFilter = " where cabinet.areaId=area.id and cabinet.systemId=system.id";
-            String strSql = "select cabinet.code,cabinet.capacity, cabinet.areaId,cabinet.systemId,area.name,system.name from cabinet, area, system";
+            String strSql = "select cabinet.code,cabinet.name, cabinet.capacity, cabinet.areaId,cabinet.systemId,area.name,system.name from cabinet, area, system";
             strSql += sqlFilter;
             jdbcTemplate.query(strSql, new RowCallbackHandler(){
                 public void processRow(ResultSet result) throws SQLException {
                     JSONObject cab = new JSONObject();
                     cab.put("code", result.getString("code"));
+                    cab.put("name", result.getString("name"));
                     cab.put("capacity", result.getDouble("capacity"));
                     cab.put("areaId", result.getInt("areaId"));
                     cab.put("systemId", result.getInt("systemId"));

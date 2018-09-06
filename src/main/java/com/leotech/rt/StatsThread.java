@@ -8,6 +8,7 @@ import com.leotech.dao.StatsDao;
 import com.leotech.entity.Device;
 import com.leotech.entity.Stats;
 import com.leotech.util.SpringContextUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -50,6 +51,7 @@ public class StatsThread implements Runnable {
                     List<Device> devices = map.get(key);
                     Stats stats = new Stats();
                     stats.name = key;
+                    stats.cabName = cabInfo.getString("name");
                     stats.totalU = 42;
                     stats.totalCap = cabInfo.getDouble("capacity");
                     stats.areaId = cabInfo.getInteger("areaId");

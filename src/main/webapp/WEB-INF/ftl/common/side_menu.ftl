@@ -10,8 +10,22 @@
     // target: Target DOM object.
     // 定制菜单数据
     // 左侧菜单数据
-    var data = [{
-        text: '模型数据', iconCls: 'fa fa-wpforms', state: 'open',
+    var data = [
+    {
+        text: '实时数据', iconCls: 'fa fa-wpforms', state: 'open',
+        children: [{
+            id: 'real_air1', text: '1号空调'
+        }, {
+            id:'real_air2', text: '2号空调'
+        }, {
+            id:'real_power', text: '电量仪'
+        }, {
+            id:'real_water', text: '漏水检测'
+        },{
+            id:'real_door', text: '门禁'
+        }]
+    },{
+        text: '模型数据', iconCls: 'fa fa-wpforms',
         children: [{
             id: 'station', text: '机房'
         }, {
@@ -62,17 +76,63 @@
     }];
     $('#sm').sidemenu({
             data:data ,
+            multiple: false,
             onSelect: function(item) {
                 // 禁用过滤器
                 $('#dg').datagrid('disableFilter');
                 var id = item.id;
-                var columns = eval('datagrid_columns_'+id);
-                var url = '${g.base}/model/get_all_' +id;
-                $('#dg').datagrid({
-                    url:url,
-                    columns: columns,
-                    tname:id
-                });
+                if(id.indexOf('real_') === 0) {
+                    // 实时数据 逻辑单独处理
+                    $('#dg_wrapper').hide();
+                    $('#dg_real_wrapper').show();
+                    var url_yx = '${g.base}/model/get_rt_yx?bjlx=1&bjid=1';
+                    var url_yc = '${g.base}/model/get_rt_yc?bjlx=1&bjid=1';
+                    if (id === "real_air1") {
+                        // 1号空调
+                        $('#table_title').text("1号空调");
+                        url_yx = '${g.base}/model/get_rt_yx?bjlx=1&bjid=1';
+                        url_yc = '${g.base}/model/get_rt_yc?bjlx=1&bjid=1';
+                    } else if (id === "real_air2") {
+                        // 2号空调
+                        $('#table_title').text("2号空调");
+                        url_yx = '${g.base}/model/get_rt_yx?bjlx=1&bjid=2';
+                        url_yc = '${g.base}/model/get_rt_yc?bjlx=1&bjid=2';
+                    } else if (id === "real_power") {
+                        $('#table_title').text("电量仪");
+                        url_yx = '${g.base}/model/get_rt_yx?bjlx=2&bjid=1';
+                        url_yc = '${g.base}/model/get_rt_yc?bjlx=2&bjid=1';
+                    } else if (id === "real_water") {
+                        $('#table_title').text("漏水检测");
+                        url_yx = '${g.base}/model/get_rt_yx?bjlx=3&bjid=1';
+                        url_yc = '${g.base}/model/get_rt_yc?bjlx=3&bjid=1';
+                    } else if (id === "real_door") {
+                        $('#table_title').text("门禁");
+                        url_yx = '${g.base}/model/get_rt_yx?bjlx=4&bjid=1';
+                        url_yc = '${g.base}/model/get_rt_yc?bjlx=4&bjid=1';
+                    }
+
+                    $('#dg_real_yx').datagrid({
+                        url: url_yx,
+                    });
+                    $('#dg_real_yc').datagrid({
+                        url: url_yc,
+                    });
+                    intervamManager = setInterval(function(){
+                        $('#dg_real_yc').datagrid('load');
+                        $('#dg_real_yx').datagrid('load');
+                    }, 5000);
+                } else {
+                    clearInterval(intervamManager);
+                    $('#dg_real_wrapper').hide();
+                    $('#dg_wrapper').show();
+                    var columns = eval('datagrid_columns_' + id);
+                    var url = '${g.base}/model/get_all_' + id;
+                    $('#dg').datagrid({
+                        url: url,
+                        columns: columns,
+                        tname: id
+                    });
+                }
             }
         });
 
