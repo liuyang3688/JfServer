@@ -5,17 +5,21 @@
         margin-bottom: 200px;
     }
     #content .card {
-        margin-left: 5%;
-        margin-right:5%;
+        margin-left: 4%;
+        margin-right:4%;
         border: 1px solid #EEEEEE;
         background: transparent;
         border-radius: 10px;
+        color: #fff;
     }
     #content .card:hover {
         border-color: #FFFFFF;
         cursor: pointer;
         background: #FFFFFF;
-        color: black;
+        color: #000;
+    }
+    #content .card-title {
+        font-size: 35px;
     }
     /*#content .card .card-img {*/
         /*width: 100%;*/

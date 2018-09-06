@@ -260,7 +260,7 @@ D3DLib.prototype.initThree = function()
 	this.renderer = new THREE.WebGLRenderer({alpha: true,antialias:true});
 	this.renderer.setSize(this.width, this.height);
 	$(this.fId).append( this.renderer.domElement );
-    this.renderer.setClearColor(0xAAAAAA, 1.0);
+    this.renderer.setClearColor(0xFFFFFF, 1.0);
     this.renderer.shadowMap.enabled = true;
     this.renderer.showMapSoft = true;
     this.renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
