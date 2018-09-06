@@ -53,21 +53,11 @@ public class RedisService {
                     for (Triple triple : mapSrc.keySet()) {
                         double dVal = mapSrc.get(triple);
                         String keyDst = String.format("%02d-", triple.bjlx) + String.format("%03d", triple.bjid);
-<<<<<<< HEAD
                         if (!mapDst.containsKey(keyDst)) {
-                            HashMap<String, String> mapCs = new HashMap<String, String>();
-                            mapDst.put(keyDst, mapCs);
-                        }
-                        String innerKey = String.format("%04d", triple.bjcs);
-                        String innerVal = String.valueOf(dVal);
-                        mapDst.get(keyDst).put( innerKey, innerVal);
-=======
-                        if (mapDst.containsKey(keyDst)) {
                             HashMap<String, String> mapCs = new LinkedHashMap<>();
                             mapDst.put(keyDst, mapCs);
                         }
                         mapDst.get(keyDst).put(String.format("%04d", triple.bjcs), String.valueOf(dVal));
->>>>>>> a8cd28d0955294770bd9d2b9dfc15902e7df56ae
                     }
                     for (String key : mapDst.keySet()) {
                         Map<String, String> mapCs = mapDst.get(key);
