@@ -25,6 +25,14 @@
             bottom: 5px;
             right: 5px;
         }
+        .datagrid-mask{
+            opacity:0;
+            filter:alpha(opacity=0);
+        }
+        .datagrid-mask-msg{
+            opacity:0;
+            filter:alpha(opacity=0);
+        }
     </style>
 </head>
 <body>
@@ -315,6 +323,7 @@
         $('#dg_real_yc').datagrid({
             fit: true,
             collapsible:true,
+            fitColumns: true,
             tname:'yc',
             url:'${g.base}/model/get_rt_yc?bjlx=1&bjid=1',
             columns:[[
@@ -329,6 +338,7 @@
         $('#dg_real_yx').datagrid({
             fit: true,
             collapsible:true,
+            fitColumns: true,
             tname:'yx',
             url:'${g.base}/model/get_rt_yx?bjlx=1&bjid=1',
             columns:[[
@@ -341,8 +351,8 @@
             emptyMsg: '记录空',
         });
         intervamManager = setInterval(function(){
-            $('#dg_real_yc').datagrid('load');
-            $('#dg_real_yx').datagrid('load');
+            $('#dg_real_yc').datagrid('reload');
+            $('#dg_real_yx').datagrid('reload');
         }, 5000);
         // <<<<<<DATAGRID
     });

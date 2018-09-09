@@ -1,6 +1,6 @@
 package com.leotech.model;
 
-public class Triple {
+public class Triple implements Comparable<Triple> {
 	public int bjlx;
 	public int bjid;
 	public int bjcs;
@@ -25,6 +25,11 @@ public class Triple {
 			}
 		}
 		return bRet;
+	}
+
+	@Override
+	public int compareTo(Triple triple) {
+		return (this.bjlx - triple.bjlx)*10000000 + (this.bjid - triple.bjid)*1000000 + this.bjcs - triple.bjcs;
 	}
 
 	@Override

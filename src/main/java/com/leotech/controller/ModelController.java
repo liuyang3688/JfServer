@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("model")
@@ -197,11 +195,16 @@ public class ModelController {
         try{
             JSONObject obj = RtService.loadBjcsLabel();
             Map<Triple, Double> map = RtService.getRtMap();
-            for (Triple triple : map.keySet()) {
+            TreeSet<Triple> treeSet = new TreeSet<>(map.keySet());
+            for (Triple triple : treeSet) {
                 if (triple.bjlx == bjlx && triple.bjid == bjid && triple.bjcs<1000) {
                     YcData ycdata = new YcData();
                     ycdata.setId(triple.bjcs);
-                    ycdata.setName(obj.getString(String.valueOf(triple.bjlx) + "-" +String.valueOf(triple.bjcs)));
+                    String paramName = obj.getString(String.valueOf(triple.bjlx) + "-" +String.valueOf(triple.bjcs));
+                    if (paramName == null) {
+                        paramName = "未知参数";
+                    }
+                    ycdata.setName(paramName);
                     ycdata.setValue(map.get(triple));
                     list.add(ycdata);
                 }
@@ -219,11 +222,16 @@ public class ModelController {
         try{
             JSONObject obj = RtService.loadBjcsLabel();
             Map<Triple, Double> map = RtService.getRtMap();
-            for (Triple triple : map.keySet()) {
+            TreeSet<Triple> treeSet = new TreeSet<>(map.keySet());
+            for (Triple triple : treeSet) {
                 if (triple.bjlx == bjlx && triple.bjid == bjid && triple.bjcs>=1000) {
                     YxData yxdata = new YxData();
                     yxdata.setId(triple.bjcs-1000);
-                    yxdata.setName(obj.getString(String.valueOf(triple.bjlx) + "-" + String.valueOf(triple.bjcs)));
+                    String paramName = obj.getString(String.valueOf(triple.bjlx) + "-" +String.valueOf(triple.bjcs));
+                    if (paramName == null) {
+                        paramName = "未知参数";
+                    }
+                    yxdata.setName(paramName);
                     double val = map.get(triple);
                     yxdata.setValue((int)val);
                     list.add(yxdata);
