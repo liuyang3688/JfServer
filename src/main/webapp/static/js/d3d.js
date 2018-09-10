@@ -1,9 +1,9 @@
 let D3DOBJ = null;
 var colorArr = [ 'red', 'green', 'blue', 'yellow', 'purple' ];
 let BJLX_AIR = 1,
-    BJLX_FIRE = 2,
-    BJLX_SERVER = 3,
-    BJLX_UPS = 4;
+    BJLX_POWER = 2,
+    BJLX_WATER = 3,
+    BJLX_DOOR = 4;
 var CsMap_AIR = {
     1:'室内温度(℃)',
     2:'室内相对湿度(%)',
@@ -72,10 +72,17 @@ var CsMap_AIR = {
     1044:'单位打开',
     1045:'报警重置',
 };
-var CsMap_FIRE = {
-    1:'消防参数1',
-    2:'消防参数2',
-    3:'消防参数3'
+var CsMap_POWER = {
+    1:'频率(HZ)',
+    2:'A相电压(V)',
+    3:'B相电压(V)',
+    4:'C相电压(V)',
+    5:'A相电流(A)',
+    6:'B相电流(A)',
+    7:'C相电流(A)',
+    8:'总有功功率(KW)',
+    9:'总无功功率(Kvar)',
+    10:'总功率因素',
 };
 function getColorByRatio(ratio){
     // 绿 蓝 黄 红
@@ -1645,37 +1652,54 @@ D3DLib.prototype.parseDynData_Air = function(datas, config) {
         //}
     }
 };
-D3DLib.prototype.parseDynData_Fire = function(datas, config) {
+D3DLib.prototype.parseDynData_Power = function(datas, config) {
     for (let key in datas) {
-        config['parent'] = 'firedevice' + key;
+        config['parent'] = 'cab_E9';
         config['name'] = config['parent'] +'-dyn_data';
         config['msgArr'] = [];
         let csArr = datas[key];
-        for (let i=0; i<csArr.length; ++i) {
+        let filterArr = [];
+        for(let i=0; i< csArr.length; i++) {
             let bj = csArr[i];
-            config['msgArr'].push(CsMap_FIRE[bj['bjcs']] + ':' + bj['val'].toFixed(2));
+            if ( (bj['bjcs'] >=1 && bj['bjcs']<=10) ||
+                (bj['bjcs'] >=1001 && bj['bjcs']<=1005) ) {
+                filterArr.push(bj);
+            }
         }
-        let mapKey = pad(BJLX_FIRE, 3) + pad(key, 3);
+        let newCsArr = filterArr.sort(function(a,b){
+            return (a['bjcs'] - b['bjcs']);
+        });
+        for(let i=0; i< newCsArr.length; i++) {
+            let bj = newCsArr[i];
+            let line = null;
+            if (bj['bjcs'] <= 7) {
+                line = CsMap_POWER[bj['bjcs']] + ':' + bj['val'].toFixed(2);
+            } else if (bj['bjcs'] >=1001) {
+                line = CsMap_POWER[bj['bjcs']] + ':' + bj['val'].toFixed(0);
+            }
+            config['msgArr'].push(line);
+        }
+        let mapKey = pad(BJLX_POWER, 3) + pad(key, 3);
         if (D3DOBJ.dynDataSpriteMap.has(mapKey)){
             // 当前设备已生成过
             let sprite = D3DOBJ.dynDataSpriteMap.get(mapKey);
             D3DOBJ.rmObject(sprite, D3DOBJ.findObject(sprite['userData']['parent']));
-
-            //let canvas = sprite.material.map.image;
-            //D3DOBJ.drawOnCanvas(canvas, config);
         }
         //else {
         // 当前设备未生成过
-        let sprite = D3DOBJ.makeTextSpriteEx(config);
+        config['font'] = '28px FangSong';
+        config['height'] = 800;
+        config['pos_y'] = 130;
+        let sprite = D3DOBJ.makeTextSpriteEx_Air(config);
         sprite['userData']['parent'] = config['parent'];
         D3DOBJ.dynDataSpriteMap.set(mapKey, sprite);
         //}
     }
 };
-D3DLib.prototype.parseDynData_Server = function(arr) {
+D3DLib.prototype.parseDynData_WATER = function(arr) {
 
 };
-D3DLib.prototype.parseDynData_Ups = function(arr) {
+D3DLib.prototype.parseDynData_Door = function(arr) {
 
 };
 D3DLib.prototype.dyn_data = function() {
@@ -1699,14 +1723,14 @@ D3DLib.prototype.dyn_data = function() {
                     if (datas.hasOwnProperty(BJLX_AIR)) {// 解析空调
                         D3DOBJ.parseDynData_Air(datas[BJLX_AIR], config);
                     }
-                    if (datas.hasOwnProperty(BJLX_FIRE)) {//解析灭火器
-                        D3DOBJ.parseDynData_Fire(datas[BJLX_FIRE], config);
+                    if (datas.hasOwnProperty(BJLX_POWER)) {//解析电量仪
+                        D3DOBJ.parseDynData_Power(datas[BJLX_POWER], config);
                     }
-                    if (datas.hasOwnProperty(BJLX_SERVER)) {//解析服务器
-                        D3DOBJ.parseDynData_Server(datas[BJLX_SERVER], config);
+                    if (datas.hasOwnProperty(BJLX_WATER)) {//解析漏水监测设备
+                        D3DOBJ.parseDynData_Water(datas[BJLX_WATER], config);
                     }
-                    if (datas.hasOwnProperty(BJLX_UPS)) {//解析UPS
-                        D3DOBJ.parseDynData_Ups(datas[BJLX_UPS], config);
+                    if (datas.hasOwnProperty(BJLX_DOOR)) {//解析门禁
+                        D3DOBJ.parseDynData_Door(datas[BJLX_DOOR], config);
                     }
                 },
                 error: function (data) {
@@ -2784,7 +2808,7 @@ D3DLib.prototype.drawOnCanvas = function(canvas, config) {
     context['fillStyle'] = config.hasOwnProperty('textColor') ? config['textColor'] : 'rgb(255,255,255)';
     let msgArr = config.hasOwnProperty('msgArr') ? (Array.isArray(config['msgArr'])? config['msgArr'] : [config['msgArr']]) : [];
     for (let i=0; i<msgArr.length; ++i) {
-        let ratio = (i+1)*1.0 /(2 + msgArr.length);
+        let ratio = (i+1)*1.0 /(1 + msgArr.length);
         context['fillText'](msgArr[i], 10, ratio*canvas['height']);
     }
 };
